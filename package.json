@@ -1,0 +1,19 @@
+{
+  "name": "petitsplats",
+  "version": "1.0.0",
+  "description": "site javacsript",
+  "main": "index.js",
+  "scripts": {
+    "test": "no"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErickTraore/PetitsPlats.git"
+  },
+  "author": "traore daouda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ErickTraore/PetitsPlats/issues"
+  },
+  "homepage": "https://github.com/ErickTraore/PetitsPlats#readme"
+}

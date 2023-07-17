@@ -1,0 +1,82 @@
+.header{
+    width: 100%;
+    height: auto;
+    display: flex;
+    background-color: transparent;    
+    &__div{
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        &__logo{
+            width: 18%;
+            height: 100%;
+            display: flex;
+            margin: 7% 7%;
+            img{
+                min-width: 100%;
+                min-height: 100%;   
+            }
+        }
+        &__text{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            margin: 3% 3%;
+            img{
+                min-width: 100%;
+                min-height: 100%;   
+            }
+        }
+        &__search{
+            width: 70%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            border-radius: 10px;  
+            margin: 10px 10px 100px 10px;
+            background-color: white; 
+            padding: 10px 10px; 
+
+            input{
+                min-width: 90%;
+                min-height: auto; 
+                justify-content: center;
+                display: flex;
+                align-self: center;
+                border: none;
+            }
+            span{
+                min-width: 6vh;
+                height: 7vh;
+                justify-content: center;
+                display: flex;
+                color: white;
+                align-items: center;
+                background-color: black;  
+                font-weight: 700;
+                border-radius: 7px;  
+
+            }
+        }
+        &__image{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            margin: 3% 3%;
+            z-index: -1;
+            top: 0px;
+            img{
+                min-width: 100%;
+                min-height: 100%;   
+            }
+        }
+    }
+}
