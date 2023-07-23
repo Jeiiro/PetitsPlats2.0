@@ -1,4 +1,143 @@
-.headerless{
+
+.card{
     width: 100%;
     height: auto;
+    display: flex;
+    &__header{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        border: solid 4px rgb(38, 0, 255);
+        &__naving{
+            width: 80%;
+            height: 30px;
+            border: solid 4px rgb(5, 1, 1);
+            display: flex;
+        }
+    }
+    &__all{
+        width: 100%;
+        height: auto;
+        border: solid 4px red;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        background-color: lightgray;
+        &__recette{
+            width: 35vh;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px 10px 0px 0px;
+            background-color: white;
+            margin-bottom: 40px;
+            &__img{
+                position: relative;
+                width: 35vh;
+                height: auto;
+                // height: 18vh;
+                display: flex;
+                flex-direction: row;
+                border-radius: 10px 10px 0px 0px;
+                img {
+                width: 70.3vh;
+                height: 23vh;
+                display: flex;
+                object-fit: cover;
+                border-radius: 10px 10px 0px 0px;
+                }
+            }
+            &__header{
+                position: absolute;
+                width: 36vh;
+                height: auto;
+                display: flex;
+                flex-direction: row-reverse; 
+                &__content{
+                    width: 9vh;
+                    height: auto;
+                    display: flex;
+                    justify-content: center;
+                    background-color: yellow;
+                    border-radius: 2vh;
+                    margin-top: 2vh;
+                    margin-right: 4vh;
+                    padding: 0.7vh 1vh;
+                }
+            }
+
+            &__body{
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                &__content{
+                    width: 90%;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    // border: solid 3px rgb(0, 255, 38);
+                    &__title{
+                        width: auto;
+                        height: auto;
+                        display: flex;
+                        font-weight: 700;
+                        font-size: 16px;
+                        padding: 20px 0px;
+                    }
+                    &__recette{
+                        width: auto;
+                        height: auto;
+                        display: flex;
+                        font-size: 10px;
+                    }
+                    &__ingredients{
+                        width: auto;
+                        height: auto;
+                        display: flex;
+                        flex-direction: column;
+                        &__items{
+                            width: 100%;
+                            height: auto;
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                            font-size: 7px;
+                            &__boucle{
+                                width: 50%;
+                                height: auto;
+                                margin-bottom: 20px;
+                                font-size: 10px;
+
+                                &__title{
+                                    width: 100%;
+                                    height: auto;
+                                    &__p{
+                                        width: 100%;
+                                        height: auto;
+                                        font-weight: 500;
+                                        line-height: 0em;
+                                    }
+                                }
+                                &__quantity{
+                                    width: 100%;
+                                    height: auto;
+                                    &__p{
+                                        width: 100%;
+                                        height: auto;
+                                        line-height: 1em;
+                                    }
+                                }
+                            }
+                        
+                            }
+                    }
+                }
+ 
+          }
+        }
+    }
 }
