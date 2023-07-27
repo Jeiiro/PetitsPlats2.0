@@ -13,7 +13,6 @@ let allRecipes = [];
     async function  getDataCard(data) {
       const cardSection = document.querySelector(".card__all");
       data.forEach((card) => {
-        console.log('card',card);
         const cardModel = cardFactory(card);
         const makeCardDOM = cardModel.makeCardDOM();
         cardSection.appendChild(makeCardDOM);
@@ -28,9 +27,33 @@ let allRecipes = [];
       };
     init();
     const inputSearch = document.getElementById('search');
-    inputSearch.addEventListener('change', (event) => {
-    console.log(event.target.value);
-    console.log(allRecipes);
-    });
+
+    inputSearch.addEventListener('input', (event) => {
+      let dataInput = event.target.value.toLowerCase();
+      console.log(dataInput);
+      const recipesDatas = allRecipes.recipes;
+      console.log(recipesDatas);
+      let vCard = [];
+      
+  
+      recipesDatas.forEach((data => { 
+        let tableIngredients = "";
+        tableIngredients  = data.ingredients.map(ingredient => {
+          return ingredient.ingredient
+        }).join(' ')
+        console.log(tableIngredients)
+        if( data.name.toLowerCase().includes(dataInput) || data.description.toLowerCase().includes(dataInput) || tableIngredients.toLowerCase().includes(dataInput) 
+        ){
+          console.log('Ici il y a égalité');
+          vCard.push(data);         
+          // console.log(vCard);
+          }
+       console.log('Ici cela est différent');
+      }
+      ));
+      document.querySelector ('.card__all').innerHTML = '';
+      getDataCard(vCard);
+
+      });
 
 

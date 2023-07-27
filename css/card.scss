@@ -33,6 +33,8 @@
             border-radius: 10px 10px 0px 0px;
             background-color: white;
             margin-bottom: 40px;
+            border-radius: 0px 0px 10px 10px;
+
             &__img{
                 position: relative;
                 width: 35vh;
@@ -73,6 +75,7 @@
                 height: auto;
                 display: flex;
                 justify-content: center;
+
                 &__content{
                     width: 90%;
                     height: auto;

@@ -29,7 +29,8 @@
       flex-direction: column;
       border-radius: 10px 10px 0px 0px;
       background-color: white;
-      margin-bottom: 40px; }
+      margin-bottom: 40px;
+      border-radius: 0px 0px 10px 10px; }
       .card__all__recette__img {
         position: relative;
         width: 35vh;
