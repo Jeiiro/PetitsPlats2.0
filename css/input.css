@@ -1,4 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/*npx tailwindcss -i ./css/input.css -o ./dist/output.css --watch*/
+/*npx tailwindcss -i ./css/input.css -o ./dist/output.css --watch
+git branch fonctionnelle
+git checkout fonctionnelle
+git commit -m
+git push u-origin fonctionnelle*/
