@@ -11,7 +11,7 @@ module.exports = {
     fontFamily: {
       'sans': 'Anton, sans-serif',
     },
-    // Commentez la partie problématique
+   
     // extend: {},
   },
   plugins: [],
