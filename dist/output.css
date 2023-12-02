@@ -2337,7 +2337,11 @@ video {
   content: var(--tw-content);
 }
 
-/*npx tailwindcss -i ./css/input.css -o ./dist/output.css --watch*/
+/*npx tailwindcss -i ./css/input.css -o ./dist/output.css --watch
+git branch fonctionnelle
+git checkout fonctionnelle
+git commit -m
+git push u-origin fonctionnelle*/
 
 @media (min-width: 640px) {
   .sm\:container {
