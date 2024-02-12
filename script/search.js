@@ -38,3 +38,7 @@ Début
 Fin
 
  */
+
+export function search(query, recipes) {
+    return recipes.filter(recipe => recipe.title.includes(query) || recipe.ingredients.includes(query) || recipe.description.includes(query));
+}
