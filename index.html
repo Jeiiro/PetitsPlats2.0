@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="./assets/utils/Group3.svg" rel="icon" type="image/png">
+    <title>Les petits plats</title>
+    <link href="./src/output.css" rel="stylesheet">
+</head>
+<body>
+<header class="h-[667px] w-screen bg-bg bg-no-repeat bg-cover">
+    <div class="ml-16 title flex item-center items-center">
+        <h1 class="text-white logo">Les petits plats</h1>
+        <img alt="logo item-center items-center" src="./assets/utils/Group3.svg">
+    </div>
+    <h1 class="text-yellow text-center font-anton text-5xl mt-40">CHERCHEZ PARMI PLUS DE 1500 RECETTES
+        DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+    <!-- Search bar -->
+    <div class="flex justify-center items-center mt-7">
+        <div class="relative w-1/2">
+            <input class="w-full h-16 rounded-xl pl-4 pr-10" id="search"
+                   placeholder="Rechercher une recette, un ingrédient, ..."
+                   type="text">
+            <img alt="search" class="absolute bg-black rounded-lg right-3 top-2 p-2 w-12 h-12"
+                 src="assets/utils/search.svg">
+        </div>
+    </div>
+
+</header>
+<!-- Filter -->
+<div class="flex justify-center items-center mt-7" id="filters">
+    <select id="ingredient-filter">
+        <option value="">Ingrédients</option>
+        <!-- Les options seront ajoutées dynamiquement ici -->
+    </select>
+    <select id="utensil-filter">
+        <option value="">Ustensiles</option>
+        <!-- Les options seront ajoutées dynamiquement ici -->
+    </select>
+    <select id="appliance-filter">
+        <option value="">Appareils</option>
+        <!-- Les options seront ajoutées dynamiquement ici -->
+    </select>
+</div>
+
+<!-- Recipe cards -->
+<div class="flex flex-wrap justify-center items-start mt-7" id="recipe-cards">
+    <!-- géré par js-->
+</div>
+
+</body>
+<script src="./script/main.js"></script>
+</html>
