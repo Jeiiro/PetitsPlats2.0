@@ -6,6 +6,10 @@
     <link href="./assets/utils/Group3.svg" rel="icon" type="image/png">
     <title>Les petits plats</title>
     <link href="./src/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <header class="h-[667px] w-screen bg-bg bg-no-repeat bg-cover">
@@ -28,26 +32,53 @@
 
 </header>
 <!-- Filter -->
-<div class="flex justify-center items-center mt-7" id="filters">
-    <select id="ingredient-filter">
-        <option value="">Ingrédients</option>
-        <!-- Les options seront ajoutées dynamiquement ici -->
-    </select>
-    <select id="utensil-filter">
-        <option value="">Ustensiles</option>
-        <!-- Les options seront ajoutées dynamiquement ici -->
-    </select>
-    <select id="appliance-filter">
-        <option value="">Appareils</option>
-        <!-- Les options seront ajoutées dynamiquement ici -->
-    </select>
-</div>
+<section class="bg-light-grey">
+    <div class="flex justify-between items-center p-7" id="filters">
+        <div class="flex justify-between items-center space-x-4">
+            <div class="filter-container w-48 h-14 relative">
+                <button class="filter-button w-full h-full" type="button">Ingrédients</button>
+                <div class="filter-dropdown hidden absolute w-full">
+                    <h2 class="filter-title">Ingrédients</h2>
+                    <input class="filter-search" placeholder="" type="text">
+                    <ul class="filter-tags">
+                        <!--                        géré par js-->
+                    </ul>
+                </div>
+            </div>
+            <div class="filter-container w-48 h-14 relative">
+                <button class="filter-button w-full h-full" type="button">Appareils</button>
+                <div class="filter-dropdown hidden absolute w-full">
+                    <h2 class="filter-title">Appareils</h2>
+                    <input class="filter-search" placeholder="" type="text">
+                    <ul class="filter-tags">
+                        <!--                        géré par js-->
+                    </ul>
+                </div>
+            </div>
+            <div class="filter-container w-48 h-14 relative">
+                <button class="filter-button w-full h-full" type="button">Ustensiles</button>
+                <div class="filter-dropdown hidden absolute w-full">
+                    <input class="filter-search" placeholder="" type="text">
+                    <ul class="filter-tags">
+                        <!--                        géré par js-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+                <p class="text-2xl font-bold ml-4" id="total_recette">1500 recettes</p>
 
-<!-- Recipe cards -->
-<div class="flex flex-wrap justify-center items-start mt-7" id="recipe-cards">
-    <!-- géré par js-->
-</div>
+            </div>
+
+            <!-- Recipe cards -->
+            <div class="flex justify-center items-center grid grid-cols-3 gap-12 mx-auto max-w-screen-xl" id="results">
+                <!-- géré par js-->
+            </div>
+            <!-- géré par js-->
+        </div>
+
+    </div>
+</section>
 
 </body>
-<script src="./script/main.js"></script>
+<script src="./script/main.js" type="module"></script>
 </html>
