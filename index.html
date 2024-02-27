@@ -14,8 +14,8 @@
 <body>
 <header class="h-[667px] w-screen bg-bg bg-no-repeat bg-cover">
     <div class="ml-16 title flex item-center items-center">
-        <h1 class="text-white logo">Les petits plats</h1>
-        <img alt="logo item-center items-center" src="./assets/utils/Group3.svg">
+        <img src="assets/utils/logo.svg" alt="logo" class="w-44 h-16">
+        <img alt="logo item-center items-center" src="./assets/utils/Group3.svg" class="w-5">
     </div>
     <h1 class="text-yellow text-center font-anton text-5xl mt-40">CHERCHEZ PARMI PLUS DE 1500 RECETTES
         DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
@@ -34,47 +34,62 @@
 <!-- Filter -->
 <section class="bg-light-grey">
     <div class="flex justify-between items-center p-7" id="filters">
-        <div class="flex justify-between items-center space-x-4">
+        <div class="flex justify-between items-center gap-16">
             <div class="filter-container w-48 h-14 relative">
+                <img alt="arrow" class="absolute right-4 top-6" src="./assets/utils/ArrowDown.svg">
                 <button class="filter-button w-full h-full" type="button">Ingrédients</button>
                 <div class="filter-dropdown hidden absolute w-full">
-                    <h2 class="filter-title">Ingrédients</h2>
                     <input class="filter-search" placeholder="" type="text">
-                    <ul class="filter-tags">
+                    <ul class="filter_tags_ingrédients filter-tags selected_list">
+                    </ul>
+                    <ul class="filter_tags_ingrédients filter-tags">
                         <!--                        géré par js-->
                     </ul>
                 </div>
             </div>
             <div class="filter-container w-48 h-14 relative">
+                <img alt="arrow" class="absolute right-4 top-6" src="./assets/utils/ArrowDown.svg">
                 <button class="filter-button w-full h-full" type="button">Appareils</button>
                 <div class="filter-dropdown hidden absolute w-full">
-                    <h2 class="filter-title">Appareils</h2>
                     <input class="filter-search" placeholder="" type="text">
-                    <ul class="filter-tags">
+                    <ul class="filter_tags_appareils filter-tags selected_list">
+                    </ul>
+                        <!--                        géré par js-->
+                    <ul class="filter_tags_appareils filter-tags">
                         <!--                        géré par js-->
                     </ul>
                 </div>
             </div>
             <div class="filter-container w-48 h-14 relative">
+                <img alt="arrow" class="absolute right-4 top-6" src="./assets/utils/ArrowDown.svg">
                 <button class="filter-button w-full h-full" type="button">Ustensiles</button>
                 <div class="filter-dropdown hidden absolute w-full">
                     <input class="filter-search" placeholder="" type="text">
-                    <ul class="filter-tags">
+                    <ul class="filter_tags_ustensiles filter-tags selected_list">
+                    </ul>
+                    <ul class="filter_tags_ustensiles filter-tags">
                         <!--                        géré par js-->
                     </ul>
                 </div>
             </div>
         </div>
-                <p class="text-2xl font-bold ml-4" id="total_recette">1500 recettes</p>
-
-            </div>
-
-            <!-- Recipe cards -->
-            <div class="flex justify-center items-center grid grid-cols-3 gap-12 mx-auto max-w-screen-xl" id="results">
-                <!-- géré par js-->
-            </div>
-            <!-- géré par js-->
+        <p class="text-2xl font-bold ml-4" id="total_recette"></p>
+    </div>
+    <div id="tags" class="gap-16 p-7">
+        <div class="tag_ingrédients w-48 h-14">
         </div>
+        <div class="tag_appareils w-48 h-14">
+        </div>
+        <div class="tag_ustensiles w-48 h-14">
+        </div>
+    </div>
+
+    <!-- Recipe cards -->
+    <div class="flex justify-center items-center grid grid-cols-3 gap-12 mx-auto max-w-screen-xl" id="results">
+        <!-- géré par js-->
+    </div>
+    <!-- géré par js-->
+    </div>
 
     </div>
 </section>
