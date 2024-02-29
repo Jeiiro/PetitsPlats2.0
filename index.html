@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les Petits Plats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+</head>
+<body>
+    <header class="bg-img text-white p-5">
+        <img id="logo" src="./assets/img/Logo.png" alt="Logo Les Petits Plats" height="40" width="330">
+        <div class="header-block">
+            <p>Cherchez parmi plus de 1500 recettes<br>du quotidien, simples et délicieuses</p>
+            <form id="searchbar" class="d-flex">
+                <input class="form-control form-control-lg me-2" type="search" placeholder="Rechercher une recette, un ingrédient...">
+                <svg width="25" height="25" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>  
+    </header>
+    <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="ingredientsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ingrédients
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ingredientsDropdown">
+                            <li>
+                                <form class="dropdown-item">
+                                    <input class="form-control form-control-sm" type="search">
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="appareilsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Appareils
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="appareilsDropdown">
+                            <li>
+                                <form class="dropdown-item">
+                                    <input class="form-control form-control-sm" type="search">
+                                </form>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Appareil 1</a></li>
+                            <li><a class="dropdown-item" href="#">Appareil 2</a></li>
+                            <li><a class="dropdown-item" href="#">Appareil 3</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="ustensilesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ustensiles
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ustensilesDropdown">
+                            <li>
+                                <form class="dropdown-item">
+                                    <input class="form-control form-control-sm" type="search">
+                                </form>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Ustensile 1</a></li>
+                            <li><a class="dropdown-item" href="#">Ustensile 2</a></li>
+                            <li><a class="dropdown-item" href="#">Ustensile 3</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <span class="ms-auto" id="totalRecipes"></span>
+        </div>
+    </nav>-->
+    <nav class="navigation-bar">
+        <ul>
+          <li class="dropdown">
+            <button class="dropbtn">Ingrédients
+              <span class="arrow-down"></span>
+            </button>
+            <div class="dropdown-content">
+              <input type="text" placeholder="Rechercher un ingrédient...">
+              <!-- Faux contenu pour l'exemple -->
+              <a href="#">Tomate</a>
+              <a href="#">Poulet</a>
+              <a href="#">Basilic</a>
+              <!-- Plus d'ingrédients -->
+            </div>
+          </li>
+          <li class="dropdown">
+            <button class="dropbtn">Appareils
+              <span class="arrow-down"></span>
+            </button>
+            <div class="dropdown-content">
+              <input type="text" placeholder="Rechercher un appareil...">
+              <!-- Faux contenu pour l'exemple -->
+              <a href="#">Four</a>
+              <a href="#">Mixeur</a>
+              <a href="#">Blender</a>
+              <!-- Plus d'appareils -->
+            </div>
+          </li>
+          <li class="dropdown">
+            <button class="dropbtn">Ustensiles
+              <span class="arrow-down"></span>
+            </button>
+            <div class="dropdown-content">
+              <input type="text" placeholder="Rechercher un ustensile...">
+              <!-- Faux contenu pour l'exemple -->
+              <a href="#">Couteau</a>
+              <a href="#">Spatule</a>
+              <a href="#">Planche à découper</a>
+              <!-- Plus d'ustensiles -->
+            </div>
+          </li>
+        </ul>
+    </nav>
+    <main class="row row-cols-1 row-cols-md-3 g-5 py-5" id="recipes"></main>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="scripts/data/recipes.js"></script>
+    <!-- Entry point -->
+    <script src="scripts/pages/index.js"></script>
+    <template id="recipeCard">
+        <div class="col">
+            <div class="card">
+                <img class="card-img-top">
+                <div class="card-img-overlay d-flex justify-content-end">
+                    <span class="badge"></span>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <span class="card-subtitle">Recette</span>
+                    <p class="card-text"></p>
+                    <span class="card-subtitle">Ingrédients</span>
+                    <ul id="ingredientsList"></ul>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
