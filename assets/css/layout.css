@@ -62,7 +62,9 @@ body {
 
 #searchbar {
   width: 70%;
+  position: relative;
 }
+
 
 #searchbar input {
   font-family: var(--secondary-font);
@@ -82,8 +84,8 @@ input[type="search"]::-webkit-search-results-decoration {
 
 #searchbar svg {
   place-items: center;
-  position: relative;
-  right: 110px;
+  position: absolute;
+  right: 80px;
   top: 22px;
   display: none;
 }
@@ -94,8 +96,8 @@ input[type="search"]::-webkit-search-results-decoration {
   background: var(--deepblack);
   border-radius: 10px;
   place-items: center;
-  position: relative;
-  right: 95px;
+  position: absolute;
+  right: 10px;
   cursor: pointer;
   top: 7px;
 }
@@ -126,6 +128,89 @@ input[type="search"]::-webkit-search-results-decoration {
   font-weight: 400;
   line-height: 32px;
 }
+
+.navigation-bar {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.navigation-bar b {
+  font-family: var(--primary-font);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--deepblack);
+  padding-top: 28px;
+}
+
+.navigation-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  column-gap: clamp(15px, 4.5vw + 5px, 65px);
+  margin-top: 2em;
+}
+
+.navigation-bar li {
+  float: left;
+}
+
+.dropbtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: black;
+  padding: 16px;
+  font-family: var(--secondary-font);
+  font-size: 16px;
+  width: 200px;
+  text-align: left;
+  border: none;
+  border-radius: 10px;
+}
+
+
+.dropbtn:hover {
+  background-color: #fff;
+}
+
+.dropbtn span {
+  margin-left: 10px;
+}
+
+/* Style de la flèche */
+.arrow-down::after {
+  content: url('data:image/svg+xml;utf8,<svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7.5 7L14 1" stroke="%231B1B1B" stroke-linecap="round"/></svg>');
+}
+
+/* Style de la flèche vers le haut */
+.arrow-up::after {
+  content: url('data:image/svg+xml;utf8,<svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7L7.5 1L14 7" stroke="%231B1B1B" stroke-linecap="round"/></svg>');
+}
+
+.dropdown-content {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  height:200px;
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+}
+
+.dropdown:hover .dropdown-content {
+  background-color: red; /* Test background rouge */
+  opacity: 1;
+  pointer-events: auto; /* Permet aux éléments d'être cliquables */
+}
+
+
+
+
 
 /* Bloc de recettes affichés sous forme de carte
 ====================== */
@@ -209,119 +294,4 @@ input[type="search"]::-webkit-search-results-decoration {
   font-size: 14px;
   font-weight: 400;
 }
-
-.navbar-nav {
-  column-gap: clamp(15px, 4.5vw + 5px, 65px);
-}
-
-.nav-link {
-  
-  font-family: var(--secondary-font);
-  font-size: 16px;
-  font-weight: 500;
-  text-decoration: none;
-  display: flex;
-  gap: 6em;
-  border-radius: 10px;
-  background: var(--white);
-  padding: 1em 0 1em 1em!important;
-}
-
-.dropdown-toggle {
-  color: var(--deepblack);
-}
-
-
-.dropdown-toggle::after {
-  margin-right: 2em;
-}
-
-/* Classe pour masquer les éléments supplémentaires */
-.dropdown-menu .extra-item {
-  display: none;
-}
-
-
-
-
-
-
-
-/* Style global */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-}
-
-/* Style de la barre de navigation */
-.navigation-bar {
-  background-color: #fff;
-  overflow: hidden;
-}
-
-.navigation-bar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.navigation-bar li {
-  float: left;
-}
-
-.dropbtn {
-  background-color: #fff;
-  color: black;
-  padding: 16px;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  font-size: 16px;
-}
-
-/* Style de la flèche */
-.arrow-down::after {
-  content: url('data:image/svg+xml;utf8,<svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7.5 7L14 1" stroke="%231B1B1B" stroke-linecap="round"/></svg>');
-}
-
-/* Style du contenu déroulant */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content input {
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid #ddd;
-  width: calc(100% - 20px);
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-/* Afficher le contenu déroulant au survol */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #f1f1f1;
-}
-
 
