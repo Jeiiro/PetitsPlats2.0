@@ -3,6 +3,7 @@ function filterAndDisplayRecipes() {
   const searchInput = searchBar.querySelector('input');
   const searchValue = searchInput.value.trim().toLowerCase();
 
+ 
   // Copie du tableau initial des recettes
   let filteredRecipes = [...recipes];
   
@@ -33,6 +34,24 @@ function filterAndDisplayRecipes() {
   displayRecipes(filteredRecipes);
 }
 
+// Fonction pour mettre à jour le contenu du sous-menu
+function updateDropdownContent(dropdownContentId, itemsList) {
+  // Trouver le div du sous-menu par son identifiant
+  const dropdownContent = document.getElementById(dropdownContentId);
+
+  // Vider le contenu actuel
+  dropdownContent.innerHTML = '';
+
+  // Ajouter chaque élément de la liste au sous-menu
+  itemsList.forEach(item => {
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `<a href="#">${item}</a>`;
+    dropdownContent.appendChild(listItem);
+  });
+
+}
+
+
 // Fonction pour afficher les recettes
 function displayRecipes(recipes) {
   const template = document.querySelector("#recipeCard");
@@ -41,8 +60,43 @@ function displayRecipes(recipes) {
   const totalRecipes = recipes.length;
 
   // Modifier le contenu de l'élément indiquant le nombre total de recettes
-  //const totalRecipesElement = document.getElementById('totalRecipes');
-  //totalRecipesElement.innerHTML = `<b>${totalRecipes} recettes</b>`;
+  const totalRecipesElement = document.getElementById('totalRecipes');
+  totalRecipesElement.textContent = `${totalRecipes} recettes`;
+
+  // Récupérer la liste d'ingrédients, d'appareils et d'ustensiles
+  const ingredientsList = [];
+  const appliancesList = [];
+  const utensilsList = [];
+
+  recipes.forEach(recipe => {
+    // Ingrédients
+    recipe.ingredients.forEach(ingredient => {
+      if (!ingredientsList.includes(ingredient.ingredient)) {
+        ingredientsList.push(ingredient.ingredient);
+      }
+    });
+
+    // Appareils
+    if (!appliancesList.includes(recipe.appliance)) {
+      appliancesList.push(recipe.appliance);
+    }
+
+    // Ustensiles
+    recipe.ustensils.forEach(utensil => {
+      if (!utensilsList.includes(utensil)) {
+        utensilsList.push(utensil);
+      }
+    });
+  });
+
+  // Mettre à jour les menus déroulants avec les listes actuelles
+  updateDropdownContent('ingredient', ingredientsList);
+  updateDropdownContent('appareil', appliancesList);
+  updateDropdownContent('ustensile', utensilsList);
+
+  //console.log('Liste des ingrédients :', ingredientsList);
+  //console.log('Liste des appareils :', appliancesList);
+  //console.log('Liste des ustensiles :', utensilsList);
 
   // Si des recettes sont disponibles, les afficher
   if (recipes.length > 0) {
@@ -121,7 +175,13 @@ function displayIngredients() {
 window.addEventListener('load', () => {
   const searchBar = document.querySelector('#searchbar');
   const searchInput = searchBar.querySelector('input');
+
   const searchClose = searchBar.querySelector("svg");
+  
+  const svgBtn = document.querySelector(".svgBtn")
+ 
+ 
+  
 
   searchInput.addEventListener("input", () => {
       if (searchInput.value) {
@@ -138,6 +198,9 @@ window.addEventListener('load', () => {
       searchInput.value = "";
       searchClose.style.display = "none";
   });
+  
+ 
+
 
   // Exécuter les fonctions pour afficher les listes dans les dropdownlist lors du chargement de la page
   //displayIngredients();
