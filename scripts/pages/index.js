@@ -36,19 +36,15 @@ function filterAndDisplayRecipes() {
 
 // Fonction pour mettre à jour le contenu du sous-menu
 function updateDropdownContent(dropdownContentId, itemsList) {
-  // Trouver le div du sous-menu par son identifiant
   const dropdownContent = document.getElementById(dropdownContentId);
-
-  // Vider le contenu actuel
   dropdownContent.innerHTML = '';
 
-  // Ajouter chaque élément de la liste au sous-menu
-  itemsList.forEach(item => {
+  // Utilisation d'une boucle for pour ajouter chaque élément de la liste au sous-menu
+  for (let i = 0; i < itemsList.length; i++) {
     const listItem = document.createElement('li');
-    listItem.innerHTML = `<a href="#">${item}</a>`;
+    listItem.innerHTML = `<a href="#">${itemsList[i]}</a>`;
     dropdownContent.appendChild(listItem);
-  });
-
+  }
 }
 
 
@@ -68,26 +64,31 @@ function displayRecipes(recipes) {
   const appliancesList = [];
   const utensilsList = [];
 
-  recipes.forEach(recipe => {
+  // Utilisation de boucles for pour parcourir les recettes et leurs ingrédients, appareils, ustensiles
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+
     // Ingrédients
-    recipe.ingredients.forEach(ingredient => {
-      if (!ingredientsList.includes(ingredient.ingredient)) {
-        ingredientsList.push(ingredient.ingredient);
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const ingredient = recipe.ingredients[j].ingredient;
+      if (!ingredientsList.includes(ingredient)) {
+        ingredientsList.push(ingredient);
       }
-    });
+    }
 
     // Appareils
     if (!appliancesList.includes(recipe.appliance)) {
       appliancesList.push(recipe.appliance);
     }
 
-    // Ustensiles
-    recipe.ustensils.forEach(utensil => {
+    // Ustensiles - si vous avez plusieurs ustensiles par recette
+    for (let k = 0; k < recipe.ustensils.length; k++) {
+      const utensil = recipe.ustensils[k];
       if (!utensilsList.includes(utensil)) {
         utensilsList.push(utensil);
       }
-    });
-  });
+    }
+  }
 
   // Mettre à jour les menus déroulants avec les listes actuelles
   updateDropdownContent('ingredient', ingredientsList);
@@ -128,82 +129,21 @@ function displayRecipes(recipes) {
   }
 }
 
-// Fonction pour afficher la liste des ingrédients dans la dropdownlist correspondante
-function displayIngredients() {
-  const ingredientsDropdown = document.getElementById('ingredientsDropdown');
-  console.log("ingredientsDropdown:", ingredientsDropdown);
-  
-
-  // Sélection de la liste déroulante
-  const dropdownMenu = ingredientsDropdown.nextElementSibling;
-  console.log("dropdownMenu:", dropdownMenu);
-
-  // Nettoyer le contenu actuel de la liste déroulante
-  dropdownMenu.innerHTML = '';
-
-  // Boucle pour récupérer tous les ingrédients uniques
-  const uniqueIngredients = [];
-  for (let i = 0; i < recipes.length; i++) {
-    const recipe = recipes[i];
-    for (let j = 0; j < recipe.ingredients.length; j++) {
-      const ingredient = recipe.ingredients[j].ingredient;
-      if (!uniqueIngredients.includes(ingredient)) {
-        uniqueIngredients.push(ingredient);
-      }
-    }
-  }
-
-  // Limiter la liste aux 5 premiers ingrédients
-  const displayedIngredients = uniqueIngredients.slice(0, 6);
-
-  // Afficher chaque ingrédient dans la dropdownlist
-  displayedIngredients.forEach((ingredient, index) => {
-    const listItem = document.createElement('li');
-    listItem.innerHTML = `<a class="dropdown-item" href="#">${ingredient}</a>`;
-    dropdownMenu.appendChild(listItem);
-  });
-
-  // Cacher visuellement les éléments supplémentaires
-  uniqueIngredients.slice(5).forEach(ingredient => {
-    const listItem = document.createElement('li');
-    listItem.innerHTML = `<a class="dropdown-item extra-item" href="#">${ingredient}</a>`;
-    dropdownMenu.appendChild(listItem);
-  });
-}
 
 // Exécuter le code lorsque la page est entièrement chargée
 window.addEventListener('load', () => {
   const searchBar = document.querySelector('#searchbar');
   const searchInput = searchBar.querySelector('input');
-
   const searchClose = searchBar.querySelector("svg");
-  
   const svgBtn = document.querySelector(".svgBtn")
- 
- 
-  
-
   searchInput.addEventListener("input", () => {
-      if (searchInput.value) {
-          searchClose.style.display = "block";
-      } else {
-          searchClose.style.display = "none";
-      }
-
-      // Ajouter un écouteur d'événement sur la saisie de l'utilisateur dans la barre de recherche
-      filterAndDisplayRecipes();
+    searchClose.style.display = searchInput.value ? "block" : "none";
+    filterAndDisplayRecipes();
   });
-
   searchClose.addEventListener("click", () => {
       searchInput.value = "";
       searchClose.style.display = "none";
   });
-  
- 
-
-
-  // Exécuter les fonctions pour afficher les listes dans les dropdownlist lors du chargement de la page
-  //displayIngredients();
 
   // Afficher toutes les recettes lors du chargement initial de la page
   displayRecipes(recipes);
