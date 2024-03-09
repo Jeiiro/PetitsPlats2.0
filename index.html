@@ -35,7 +35,13 @@
               <span class="arrow-down"></span>
             </button>
             <div class="dropdown-content">
-              <input type="text" placeholder="Rechercher un ingrédient...">
+              <div class="input-group">
+                <input type="text" name="ingredientField">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
+                  <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
+                </svg>    
+              </div>            
               <ul id="ingredient"></ul>
             </div>
           </li>
@@ -44,8 +50,14 @@
               <span class="arrow-down"></span>
             </button>
             <div class="dropdown-content">
-              <input type="text" placeholder="Rechercher un appareil...">
-              <ul id="appareil"></ul>
+              <div class="input-group">
+                <input type="text" name="applianceField">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
+                  <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
+                </svg>   
+              </div>
+              <ul id="appliance"></ul>
             </div>
           </li>
           <li class="dropdown">
@@ -53,8 +65,14 @@
               <span class="arrow-down"></span>
             </button>
             <div class="dropdown-content">
-              <input type="text" placeholder="Rechercher un ustensile...">
-              <ul id="ustensile"></ul>
+              <div class="input-group">
+                <input type="text" name="utensilField">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
+                  <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
+                </svg>   
+              </div>
+              <ul id="utensil"></ul>
             </div>
           </li>
         </ul>
@@ -65,9 +83,8 @@
     </main>  
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/data/recipes.js"></script>
     <!-- Entry point -->
-    <script src="scripts/pages/index.js"></script>
+    <script src="scripts/pages/index.js" type="module"></script>
     <template id="recipeCard">
         <div class="col">
             <div class="card">

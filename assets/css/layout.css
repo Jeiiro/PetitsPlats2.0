@@ -162,7 +162,7 @@ input[type="search"]::-webkit-search-results-decoration {
   justify-content: space-between;
   align-items: center;
   border: none;
-  width: 240px;
+  width: 250px;
   background: var(--white);
   padding: 16px; 
   color: var(--deepblack);
@@ -173,7 +173,6 @@ input[type="search"]::-webkit-search-results-decoration {
   top: 0;
   z-index: 100;
 }
-
 
 .dropbtn:hover {
   background-color: #fff;
@@ -191,10 +190,10 @@ input[type="search"]::-webkit-search-results-decoration {
   content: url('data:image/svg+xml;utf8,<svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7L7.5 1L14 7" stroke="%231B1B1B" stroke-linecap="round"/></svg>');
 }
 
-
 .dropdown:hover .dropdown-content {
-  height: 140px;
+  height: 240px;
   position: relative;
+  top: -15px;
 }
 
 .dropdown-content {
@@ -204,21 +203,71 @@ input[type="search"]::-webkit-search-results-decoration {
   height: 0;
   overflow: hidden;
   scrollbar-width: none;
-  border-radius: 11px;
   background: var(--white);
-  color: #1B1B1B;
+  color: var(--deepblack);
+  font-family: var(--secondary-font);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+}
+
+.dropdown-content svg {
+  width: 13.5px;
+  height: 14px;
+  transform: translateX(60px) translateY(10px);
+}
+
+#ingredient, #appliance, #utensil {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+#ingredient li, #appliance li, #utensil li {
+  padding: 0.4em 0 0.4em 16px;
+  list-style: none;
+  text-transform: lowercase;
+}
+
+#ingredient li::first-letter , #appliance li::first-letter , #utensil li::first-letter  {
+  text-transform: capitalize;
+}
+
+#ingredient li a, #appliance li a, #utensil li a {
+  text-decoration: none;
+  color: var(--deepblack);
+  display: block;
+}
+
+/*#ingredient li:hover, #ingredient li:active, #appliance li:hover, #appliance li:active, #utensil li:hover, #utensil li:active {
+  background: var(--yellow);
+}*/
+
+
+input[type="text"] {
+  border: none;
+  outline: none;
+  width: 120px;
+  height: 34px;
+  color: #7A7A7A;
   font-family: "Manrope", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding-left: 8px;
+  background: #FFF;
 }
 
-#ingredient, #appareil, #ustensile {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
+.input-group {
+  width: auto;
+  height: 36px;
+  border-radius: 2px;
+  border: 1px solid #C6C6C6;
+  margin: 10px 15px 10px 15px;
 }
+
 
 /* Bloc de recettes affichés sous forme de carte
 ====================== */
