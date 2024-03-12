@@ -1,203 +1,236 @@
 import {recipes} from "../data/recipes.js";
 import {displayCards} from "./card.js";
 
-// Fonction pour ajouter un tag sélectionné à la section des tags
-function addSelectedTagToSection(tagText, category) {
-    const tagSection = document.querySelector(`.tag_${category}`);
-    const tagElement = document.createElement('div');
-    tagElement.textContent = tagText;
-    tagElement.classList.add('tag', 'selected');
 
-    const cross = document.createElement('img');
-    cross.src = '../assets/utils/cross_tag.svg';
-    cross.alt = 'cross';
-    cross.classList.add('cross_tag');
-
-    // Supprimer le tag lorsqu'on clique sur la croix
-    cross.addEventListener('click', () => {
-        // Désélectionner le tag dans le filtre
-        const filterTag = document.querySelector(`.filter_tags_${category} .tag.selected`);
-        tagElement.remove();
-        if (filterTag && filterTag.textContent.trim() === tagText) {
-            filterTag.classList.remove('selected');
-            const crossInFilter = filterTag.querySelector('.cross');
-            if (crossInFilter)
-                crossInFilter.remove();
-        } else {
-            console.log('filter_tags_', category);
-            console.log(tagText);
-            console.log(tagSection);
-
-
-        }
-        // Mettre à jour les recettes et les tags de filtre
-        const filteredRecipes = filterRecipesByTags();
-        updateFilterTags(filteredRecipes);
-        displayCards(filteredRecipes);
-
-    });
-
-    tagElement.appendChild(cross);
-    tagSection.appendChild(tagElement);
-}
-
-// Fonction pour filtrer les recettes en fonction des tags sélectionnés
-export function filterRecipesByTags() {
-    const selectedTags = Array.from(document.querySelectorAll('.selected')).map(tag => tag.textContent.trim().toLowerCase());
-    // Ensure that this function returns an array
-    return recipes.filter(recipe => {
-        const recipeTags = [
-            ...recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()),
-            recipe.appliance.toLowerCase(),
-            ...recipe.ustensils.map(ustensils => ustensils.toLowerCase())
-        ];
-        return selectedTags.every(tag => recipeTags.includes(tag));
-    });
-}
-
-// Fonction pour mettre à jour les tags de filtre
-export function updateFilterTags(filteredRecipes) {
-    // Get all ingredients, ustensils, and appareils from the filtered recipes
-    const ingredients = filteredRecipes.map(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient));
-    const ustensiles = filteredRecipes.map(recipe => recipe.ustensils);
-    const appareils = filteredRecipes.map(recipe => recipe.appliance);
-
-
-    const allIngredients = [...new Set([].concat(...ingredients))].sort();
-    const allUstensiles = [...new Set([].concat(...ustensiles))].sort();
-    const allAppareils = [...new Set(appareils)].sort();
-
-    // Add the sorted tags to the appropriate containers
-    addTagsToContainer(allIngredients, 'ingrédients');
-    addTagsToContainer(allUstensiles, 'ustensiles');
-    addTagsToContainer(allAppareils, 'appareils');
-}
-
-
-// Fonction pour ajouter les tags aux conteneurs appropriés
-function addTagsToContainer(tags, category) {
-    const container = document.querySelector(`.filter_tags_${category}`);
-    if (container) {
-        // Get selected tags
-        const selectedTags = Array.from(document.querySelectorAll('.selected')).map(tag => tag.textContent.trim());
-
-        // Sort tags: selected tags first, then the rest
-        tags.sort((a, b) => {
-            if (selectedTags.includes(a) && !selectedTags.includes(b)) {
-                return -1;
-            } else if (!selectedTags.includes(a) && selectedTags.includes(b)) {
-                return 1;
-            } else {
-                return a.localeCompare(b);
-            }
-        });
-
-        tags.forEach(tag => {
-            // Only add the tag if it is not already in the container
-            if (!Array.from(container.children).some(li => li.textContent.trim() === tag)) {
-                const li = document.createElement('li');
-
-                li.textContent = tag;
-                li.classList.add('tag');
-                // Add cross.svg to selected tags
-                if (selectedTags.includes(tag)) {
-                    li.innerHTML += ' <img src="../assets/utils/cross.svg" alt="cross" class="cross">';
-                }
-                container.prepend(li); // Change this line
-            }
-        });
+function attachClickListener(li, ul, selectedUl, category, data) {
+    if (li.listenerAttached) {
+        return;
     }
-}
 
-// Fonction pour gérer les filtres
-export function handleFilters() {
-    document.querySelectorAll('.filter-container').forEach(filterContainer => {
-        const filterButton = filterContainer.querySelector('.filter-button');
-        const filterDropdown = filterContainer.querySelector('.filter-dropdown');
-        const filterSearch = filterContainer.querySelector('.filter-search');
-        const filterTags = filterContainer.querySelector('.filter-tags');
-        const arrow = filterContainer.querySelector('img');
+    li.listenerAttached = true;
 
-        // Toggle the visibility of the dropdown when the filter button is clicked
-        filterButton.addEventListener('click', () => {
-            filterDropdown.classList.toggle('hidden');
-            if (filterDropdown.classList.contains('hidden')) {
-                arrow.src = './assets/utils/ArrowDown.svg';
-                filterButton.style.borderRadius = '11px';
-                filterDropdown.style.zIndex = '0';
-            } else {
-                arrow.src = './assets/utils/ArrowUp.svg';
-                filterButton.style.borderRadius = '11px 11px 0 0';
-                filterDropdown.style.zIndex = '1';
-            }
-        });
 
-        // Close the dropdown when clicking outside of the filter container
-        document.addEventListener('click', (event) => {
-            if (!filterContainer.contains(event.target)) {
-                filterDropdown.classList.add('hidden');
-                arrow.src = './assets/utils/ArrowDown.svg';
-                filterButton.style.borderRadius = '11px';
-                filterDropdown.style.zIndex = '0';
-            }
-        });
-
-        // Filter the tags when the user types in the search input
-        filterSearch.addEventListener('input', event => {
-            const searchValue = event.target.value.toLowerCase();
-            filterTags.querySelectorAll('li').forEach(tag => {
-                const tagText = tag.textContent.toLowerCase();
-                if (tagText.includes(searchValue)) {
-                    tag.classList.remove('hidden');
-                } else {
-                   
-                }
-            });
-        });
-
-        // Change the background color of the tag and add a cross icon when it is clicked
-        filterTags.addEventListener('click', event => {
-            if (event.target.tagName === 'LI') {
-                const tagElement = event.target;
-                const tagText = tagElement.textContent.trim();
-                const category = filterContainer.querySelector('.filter-button').textContent.toLowerCase();
-
-                // Check if the tag is already selected
-                if (tagElement.classList.contains('selected')) {
-                    // Deselect the tag
-                    tagElement.classList.remove('selected');
-                    const crossInTag = tagElement.querySelector('.cross');
-                    if (crossInTag)
-                        crossInTag.remove();
-
-                    // Remove the tag from the selected tags section
-                    const selectedTagSection = document.querySelector(`.tag_${category} .tag.selected`);
-                    if (selectedTagSection && selectedTagSection.textContent.trim() === tagText) {
-                        selectedTagSection.remove();
-                    }
-                } else {
-                    // Select the tag
-                    tagElement.classList.add('selected');
-                    tagElement.innerHTML += ' <img src="../assets/utils/cross.svg" alt="cross" class="cross">';
-
-                    // Add the tag to the selected tags section
-                    addSelectedTagToSection(tagText, category);
-                }
-
-                // Filter the recipes and update the filter tags
-                const filteredRecipes = filterRecipesByTags();
-                updateFilterTags(filteredRecipes);
-                displayCards(filteredRecipes);
-
-                // Remove all other tags that do not match the filtered recipes
-                const allTags = Array.from(document.querySelectorAll('.tag'));
-                allTags.forEach(tag => {
-                    const tagText = tag.textContent.trim();
-                    if (!filteredRecipes.some(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient).includes(tagText) || recipe.appliance === tagText || recipe.ustensils.includes(tagText))) {
-                        tag.remove();
-                    }
+    function filterRecipesByTags(data, category, selectedFilter) {
+        let filteredRecipes = recipes;
+        console.log(selectedFilter);
+        selectedFilter.forEach(selectedFilter => {
+            if (category === 'ingredients') {
+                filteredRecipes = filteredRecipes.filter(recipe => {
+                    return recipe.ingredients.some(ingredient => ingredient.ingredient === selectedFilter);
+                });
+            } else if (category === 'appareils') {
+                filteredRecipes = filteredRecipes.filter(recipe => {
+                    return recipe.appliance === selectedFilter;
+                });
+            } else if (category === 'ustensiles') {
+                filteredRecipes = filteredRecipes.filter(recipe => {
+                    return recipe.ustensils.includes(selectedFilter);
                 });
             }
         });
+        console.log(filteredRecipes);
+        let ingredients = [];
+        let appareils = [];
+        let ustensiles = [];
+
+        filteredRecipes.forEach((recipe) => {
+            recipe.ingredients.forEach(ingredient => {
+                ingredients.push(ingredient.ingredient);
+            });
+            appareils.push(recipe.appliance);
+            ustensiles.push(...recipe.ustensils);
+        });
+        ingredients = [...new Set(ingredients)].sort();
+        console.log(ingredients);
+        ingredients.forEach(ingredient => {
+            if (ingredients) {
+            }
+        });
+
+        appareils = [...new Set(appareils)].sort();
+        ustensiles = [...new Set(ustensiles)].sort();
+        const datafiltre = {ingredients, appareils, ustensiles};
+        const categories = ['ingredients', 'appareils', 'ustensiles'];
+        categories.forEach(category => {
+            const ul = document.querySelector(`.filter_tags_${category}`);
+            const selectedUl = document.querySelector(`.selected_filter_tags_${category}`);
+            ul.innerHTML = ''; // Clear the ul
+            datafiltre[category].forEach(tag => {
+                const li = document.createElement('li');
+                li.textContent = tag;
+                li.classList.add('tag');
+                ul.appendChild(li);
+                attachClickListener(li, ul, selectedUl, category, datafiltre);
+            });
+        });
+
+        displayCards(filteredRecipes);
+        return filteredRecipes;
+    }
+
+    li.addEventListener('click', (event) => {
+        if (event.target.classList.contains('selected')) {
+            // Remove 'selected' class from the clicked li
+            event.target.classList.remove('selected');
+            // Remove the li from the permanent list
+            const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
+            const permanentLi = [...permanentUl.children].find(child => child.textContent === event.target.textContent);
+            if (permanentLi) {
+                permanentLi.remove();
+            }
+
+            // Find the correct index to insert the li element
+            const index = [...ul.children].findIndex(child => child.textContent.localeCompare(event.target.textContent) > 0);
+            if (index === -1) {
+                // If no such index is found, append the li at the end
+                ul.appendChild(event.target);
+            } else {
+                // Otherwise, insert the li before the element at the found index
+                ul.insertBefore(event.target, ul.children[index]);
+            }
+
+            // Re-attach the click listener
+            attachClickListener(event.target, ul, selectedUl, category, data);
+            //update the filtered recipes
+            const selectedFilter = [...selectedUl.children].map(li => li.textContent);
+            filterRecipesByTags(data, category, selectedFilter);
+        } else {
+            // Add 'selected' class to the clicked li
+
+            let selectedLi = event.target.cloneNode(true);
+            selectedUl.appendChild(selectedLi);
+            let permanentLi = event.target.cloneNode(true);
+            const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
+
+
+            // Check if a li with the same content already exists in permanentLi
+            const existingLi = [...permanentUl.children].find(child => child.textContent === permanentLi.textContent);
+            if (!existingLi) {
+                // If no such li exists, add the new li to permanentLi
+                permanentUl.appendChild(permanentLi);
+            }
+            permanentLi.addEventListener('click', () => {
+                permanentLi.remove();
+                selectedLi.remove();
+                li.click();
+            });
+            selectedLi.addEventListener('click', () => {
+                selectedLi.remove();
+                // Trigger the click event on the original li to move it back to the original list
+                li.click();
+            });
+
+            // Remove the li from the original list
+            event.target.remove();
+            console.log(event.target);
+            const selectedFilter = [...selectedUl.children].map(li => li.textContent);
+            const filteredRecipes = filterRecipesByTags(data, category, selectedFilter);
+
+            ul.innerHTML = ''; // Clear the ul
+            let tags = [];
+            filteredRecipes.forEach(recipe => {
+                if (category === 'appareils') {
+                    tags.push(recipe.appliance);
+                }
+                if (category === 'ustensiles') {
+                    tags.push(...recipe.ustensils);
+                }
+                if (category === 'ingredients') {
+                    recipe.ingredients.forEach(ingredient => {
+                        tags.push(ingredient.ingredient);
+                    });
+                }
+            });
+
+            // Remove duplicates and sort alphabetically
+            tags = [...new Set(tags)].sort();
+
+            tags.forEach(tag => {
+                const li = document.createElement('li');
+                li.textContent = tag;
+                li.classList.add('tag');
+                ul.appendChild(li);
+                attachClickListener(li, ul, selectedUl, category, data);
+            });
+
+            displayCards(filteredRecipes);
+        }
     });
+
+
+    const permanentFilterTags = ['appareils', 'ingredients', 'ustensiles'];
+    permanentFilterTags.forEach(filterTag => {
+        const permanentFilterTagUl = document.querySelector(`.permanent_filter_tags_${filterTag}`);
+        permanentFilterTagUl.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
+                const permanentLi = [...permanentUl.children].find(child => child.textContent === event.target.textContent);
+                if (permanentLi) {
+                    permanentLi.click();
+                }
+            }
+        });
+    });
+}
+
+export function updateFilterTags() {
+    let ingredients = [];
+    let appareils = [];
+    let ustensiles = [];
+
+    recipes.forEach((recipe) => {
+        recipe.ingredients.forEach(ingredient => {
+            ingredients.push(ingredient.ingredient);
+        });
+        appareils.push(recipe.appliance);
+        ustensiles.push(...recipe.ustensils);
+    });
+
+    ingredients = [...new Set(ingredients)].sort();
+    appareils = [...new Set(appareils)].sort();
+    ustensiles = [...new Set(ustensiles)].sort();
+
+    const categories = ['ingredients', 'appareils', 'ustensiles'];
+    const data = {ingredients, appareils, ustensiles};
+
+    categories.forEach(category => {
+        const ul = document.querySelector(`.filter_tags_${category}`);
+        const selectedUl = document.querySelector(`.selected_filter_tags_${category}`);
+        ul.innerHTML = ''; // Clear the ul
+
+        data[category].forEach(tag => {
+            const li = document.createElement('li');
+            li.textContent = tag;
+            li.classList.add('tag');
+            ul.appendChild(li);
+
+            attachClickListener(li, ul, selectedUl, category, data);
+        });
+
+    });
+
+}
+
+export function handleFilters() {
+    const filterButtons = document.querySelectorAll('.filter-button');
+    //si on clique sur un bouton, on affiche le dropdown correspondant
+    filterButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const dropdown = event.target.nextElementSibling;
+                dropdown.classList.toggle('hidden');
+                const arrowImg = event.target.parentElement.querySelector('img');
+                if (!dropdown.classList.contains('hidden')) {
+                    button.style.borderRadius = '11px 11px 0 0';
+                    dropdown.style.zIndex = '1';
+                    //change src of the arrow to up
+                    arrowImg.setAttribute('src', './assets/utils/ArrowUp.svg');
+                } else {
+                    button.style.borderRadius = '11px';
+                    dropdown.style.zIndex = '-1';
+                    //change src
+                    arrowImg.setAttribute("src", "assets/utils/ArrowDown.svg");
+                }
+            });
+        }
+    );
 }
