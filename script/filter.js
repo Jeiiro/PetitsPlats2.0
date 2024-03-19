@@ -28,7 +28,7 @@ function attachClickListener(li, ul, selectedUl, category, data) {
                 });
             }
         });
-        console.log(filteredRecipes);
+        // console.log(filteredRecipes);
         let ingredients = [];
         let appareils = [];
         let ustensiles = [];
@@ -40,15 +40,16 @@ function attachClickListener(li, ul, selectedUl, category, data) {
             appareils.push(recipe.appliance);
             ustensiles.push(...recipe.ustensils);
         });
-        ingredients = [...new Set(ingredients)].sort();
-        console.log(ingredients);
-        ingredients.forEach(ingredient => {
-            if (ingredients) {
-            }
-        });
 
+        ingredients = [...new Set(ingredients)].sort();
         appareils = [...new Set(appareils)].sort();
         ustensiles = [...new Set(ustensiles)].sort();
+
+        ingredients = ingredients.filter(tag => !selectedFilter.includes(tag));
+        appareils = appareils.filter(tag => !selectedFilter.includes(tag));
+        ustensiles = ustensiles.filter(tag => !selectedFilter.includes(tag));
+
+
         const datafiltre = {ingredients, appareils, ustensiles};
         const categories = ['ingredients', 'appareils', 'ustensiles'];
         categories.forEach(category => {
@@ -78,6 +79,10 @@ function attachClickListener(li, ul, selectedUl, category, data) {
             if (permanentLi) {
                 permanentLi.remove();
             }
+            const selectedLi = [...selectedUl.children].find(child => child.textContent === event.target.textContent);
+            if (selectedLi) {
+                selectedLi.remove();
+            }
 
             // Find the correct index to insert the li element
             const index = [...ul.children].findIndex(child => child.textContent.localeCompare(event.target.textContent) > 0);
@@ -96,18 +101,27 @@ function attachClickListener(li, ul, selectedUl, category, data) {
             filterRecipesByTags(data, category, selectedFilter);
         } else {
             // Add 'selected' class to the clicked li
+            event.target.classList.add('selected');
 
             let selectedLi = event.target.cloneNode(true);
+            let crossImg = document.createElement('img');
+            crossImg.src = './assets/utils/cross.svg';
+            crossImg.classList.add('cross_selected');
             selectedUl.appendChild(selectedLi);
-            let permanentLi = event.target.cloneNode(true);
-            const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
+            selectedLi.appendChild(crossImg);
 
+            let permanentLi = event.target.cloneNode(true);
+            let crossTagImg = document.createElement('img');
+            crossTagImg.src = './assets/utils/cross_tag.svg';
+            crossTagImg.classList.add('cross_tag');
+            const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
 
             // Check if a li with the same content already exists in permanentLi
             const existingLi = [...permanentUl.children].find(child => child.textContent === permanentLi.textContent);
             if (!existingLi) {
                 // If no such li exists, add the new li to permanentLi
                 permanentUl.appendChild(permanentLi);
+                permanentLi.appendChild(crossTagImg);
             }
             permanentLi.addEventListener('click', () => {
                 permanentLi.remove();
@@ -122,7 +136,7 @@ function attachClickListener(li, ul, selectedUl, category, data) {
 
             // Remove the li from the original list
             event.target.remove();
-            console.log(event.target);
+
             const selectedFilter = [...selectedUl.children].map(li => li.textContent);
             const filteredRecipes = filterRecipesByTags(data, category, selectedFilter);
 
@@ -144,6 +158,10 @@ function attachClickListener(li, ul, selectedUl, category, data) {
 
             // Remove duplicates and sort alphabetically
             tags = [...new Set(tags)].sort();
+
+            // Exclude the selected tags
+            tags = tags.filter(tag => !selectedFilter.includes(tag));
+
 
             tags.forEach(tag => {
                 const li = document.createElement('li');
@@ -228,7 +246,7 @@ export function handleFilters() {
                     button.style.borderRadius = '11px';
                     dropdown.style.zIndex = '-1';
                     //change src
-                    arrowImg.setAttribute("src", "assets/utils/ArrowDown.svg");
+                    arrowImg.setAttribute("src", "./assets/utils/ArrowDown.svg");
                 }
             });
         }

@@ -10,7 +10,7 @@ export function search(query, recipes) {
     const lowerCaseQuery = query.toLowerCase();
     const results = recipes.filter(recipe =>
         recipe.name.toLowerCase().includes(lowerCaseQuery) ||
-        recipe.ingredients.join(' ').toLowerCase().includes(lowerCaseQuery) ||
+        recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(lowerCaseQuery)) ||
         recipe.description.toLowerCase().includes(lowerCaseQuery)
     );
     // Convert results to Set to remove duplicates, then convert back to array
