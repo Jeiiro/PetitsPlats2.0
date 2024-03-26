@@ -14,17 +14,21 @@ function attachClickListener(li, ul, selectedUl, category, data) {
         let filteredRecipes = recipes;
         console.log(selectedFilter);
         selectedFilter.forEach(selectedFilter => {
+            // Normalize the filter text
+            let normalizedFilter = selectedFilter.toLowerCase().trim();
+            normalizedFilter = normalizedFilter.charAt(0).toUpperCase() + normalizedFilter.slice(1);
+
             if (category === 'ingredients') {
                 filteredRecipes = filteredRecipes.filter(recipe => {
-                    return recipe.ingredients.some(ingredient => ingredient.ingredient === selectedFilter);
+                    return recipe.ingredients.some(ingredient => ingredient.ingredient === normalizedFilter);
                 });
             } else if (category === 'appareils') {
                 filteredRecipes = filteredRecipes.filter(recipe => {
-                    return recipe.appliance === selectedFilter;
+                    return recipe.appliance === normalizedFilter;
                 });
             } else if (category === 'ustensiles') {
                 filteredRecipes = filteredRecipes.filter(recipe => {
-                    return recipe.ustensils.includes(selectedFilter);
+                    return recipe.ustensils.includes(normalizedFilter);
                 });
             }
         });
@@ -198,10 +202,20 @@ export function updateFilterTags() {
 
     recipes.forEach((recipe) => {
         recipe.ingredients.forEach(ingredient => {
-            ingredients.push(ingredient.ingredient);
+            let normalizedIngredient = ingredient.ingredient.toLowerCase().trim();
+            normalizedIngredient = normalizedIngredient.charAt(0).toUpperCase() + normalizedIngredient.slice(1);
+            // Remove trailing 's' to handle plurals
+            if (normalizedIngredient.endsWith('s')) {
+                normalizedIngredient = normalizedIngredient.slice(0, -1);
+            }
+            ingredients.push(normalizedIngredient);
         });
-        appareils.push(recipe.appliance);
-        ustensiles.push(...recipe.ustensils);
+        let normalizedAppliance = recipe.appliance.toLowerCase().trim();
+        normalizedAppliance = normalizedAppliance.charAt(0).toUpperCase() + normalizedAppliance.slice(1);
+        appareils.push(normalizedAppliance);
+        let normalizedUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase().trim());
+        normalizedUstensils = normalizedUstensils.map(ustensil => ustensil.charAt(0).toUpperCase() + ustensil.slice(1));
+        ustensiles.push(...normalizedUstensils);
     });
 
     ingredients = [...new Set(ingredients)].sort();
@@ -251,4 +265,35 @@ export function handleFilters() {
             });
         }
     );
+    const filterSearchInput = document.querySelectorAll('.filter-search');
+    filterSearchInput.forEach((input) => {
+            input.addEventListener('input', (event) => {
+                // Get the parent container of the input field
+                const parentContainer = event.target.parentElement;
+// Get the category of the filter
+                const category = 'ingredients' || 'appareils' || 'ustensiles';
+                // Get all the tag elements within this parent container
+                const filterTags = parentContainer.querySelectorAll('.tag');
+                const filterTagsArray = Array.from(filterTags);
+                const filterTagsText = filterTagsArray.map(tag => tag.textContent);
+                const filterResults = filterTagsText.filter(tag => tag.toLowerCase().includes(event.target.value.toLowerCase()));
+
+                const selectedUl = document.querySelector(`.selected_filter_tags_${category}`);
+                const selectedTags = Array.from(selectedUl.children).map(li => li.textContent);
+                filterTagsArray.forEach(tag => {
+                    // If the tag is selected, always display it
+                    if (selectedTags.includes(tag.textContent)) {
+                        tag.style.display = 'block';
+                    } else if (filterResults.includes(tag.textContent)) {
+                        // If the tag is not selected but matches the search, display it
+                        tag.style.display = 'block';
+                    } else {
+                        // If the tag is not selected and does not match the search, hide it
+                        tag.style.display = 'none';
+                    }
+                });
+            });
+        }
+    );
+
 }

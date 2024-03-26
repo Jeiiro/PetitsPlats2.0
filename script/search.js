@@ -41,11 +41,6 @@ export function handleSearch() {
             displayCards(filteredResults);
             // Update total recette count
             totalRecette.textContent = `${filteredResults.length} recettes trouvées`;
-        } else {
-            // Clear previous results if no search results
-            document.getElementById('results').innerHTML = '';
-            // Update total recette count
-            totalRecette.textContent = '0 recettes trouvées';
         }
     });
 }

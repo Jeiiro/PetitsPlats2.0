@@ -57,7 +57,7 @@
 }
 
 .filter-tags {
-    max-height: 315px;
+    max-height: 230px;
     overflow-y: auto;
 
 }
@@ -110,5 +110,3 @@
     flex-direction: row;
     position: relative;
 }
-
-.filter-tags
