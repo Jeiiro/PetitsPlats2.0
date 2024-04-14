@@ -9,6 +9,7 @@ function attachClickListener(li, ul, selectedUl, category, data) {
 
     li.listenerAttached = true;
 
+    
 
     function filterRecipesByTags(data, category, selectedFilter) {
         let filteredRecipes = recipes;
@@ -27,22 +28,24 @@ function attachClickListener(li, ul, selectedUl, category, data) {
                     return recipe.appliance === normalizedFilter;
                 });
             } else if (category === 'ustensiles') {
+                // toLowerCase() to make the search case-insensitive
+                let normalizedFilter = selectedFilter.toLowerCase().trim();
                 filteredRecipes = filteredRecipes.filter(recipe => {
-                    return recipe.ustensils.includes(normalizedFilter);
+                    return recipe.ustensils.some(ustensil => ustensil.toLowerCase() === normalizedFilter);
                 });
             }
         });
-        // console.log(filteredRecipes);
+        console.log(filteredRecipes);
         let ingredients = [];
         let appareils = [];
         let ustensiles = [];
 
         filteredRecipes.forEach((recipe) => {
             recipe.ingredients.forEach(ingredient => {
-                ingredients.push(ingredient.ingredient);
+                ingredients.push(capitaliseFirstLetter(ingredient.ingredient));
             });
-            appareils.push(recipe.appliance);
-            ustensiles.push(...recipe.ustensils);
+            appareils.push(capitaliseFirstLetter(recipe.appliance));
+            ustensiles.push(...recipe.ustensils.map(ustensil => capitaliseFirstLetter(ustensil)));
         });
 
         ingredients = [...new Set(ingredients)].sort();
@@ -54,7 +57,11 @@ function attachClickListener(li, ul, selectedUl, category, data) {
         ustensiles = ustensiles.filter(tag => !selectedFilter.includes(tag));
 
 
-        const datafiltre = {ingredients, appareils, ustensiles};
+        const datafiltre = {
+            ingredients:[...new Set(ingredients)].sort(),
+            appareils: [...new Set(appareils)].sort(),
+            ustensiles: [...new Set(ustensiles)].sort()
+        };
         const categories = ['ingredients', 'appareils', 'ustensiles'];
         categories.forEach(category => {
             const ul = document.querySelector(`.filter_tags_${category}`);
@@ -169,7 +176,7 @@ function attachClickListener(li, ul, selectedUl, category, data) {
 
             tags.forEach(tag => {
                 const li = document.createElement('li');
-                li.textContent = tag;
+                li.textContent = capitaliseFirstLetter(tag);
                 li.classList.add('tag');
                 ul.appendChild(li);
                 attachClickListener(li, ul, selectedUl, category, data);
@@ -194,6 +201,25 @@ function attachClickListener(li, ul, selectedUl, category, data) {
         });
     });
 }
+document.addEventListener('click', function(event) {
+    const filterDropdowns = document.querySelectorAll('.filter-dropdown');
+    filterDropdowns.forEach((dropdown) => {
+        const isClickInside = dropdown.contains(event.target);
+        const isFilterButton = event.target.classList.contains('filter-button');
+        const isFilterElement = event.target.classList.contains('tag'); // Check if the clicked element is a filter element
+        if (!isClickInside && !isFilterButton && !isFilterElement && !dropdown.classList.contains('hidden')) {
+            dropdown.classList.add('hidden');
+            const button = dropdown.previousElementSibling;
+            button.style.borderRadius = '11px';
+            const arrowImg = button.parentElement.querySelector('img');
+            arrowImg.setAttribute("src", "./assets/utils/ArrowDown.svg");
+        }
+    });
+});
+
+function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export function updateFilterTags() {
     let ingredients = [];
@@ -214,7 +240,7 @@ export function updateFilterTags() {
         normalizedAppliance = normalizedAppliance.charAt(0).toUpperCase() + normalizedAppliance.slice(1);
         appareils.push(normalizedAppliance);
         let normalizedUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase().trim());
-        normalizedUstensils = normalizedUstensils.map(ustensil => ustensil.charAt(0).toUpperCase() + ustensil.slice(1));
+        normalizedUstensils = normalizedUstensils.map(ustensil => capitaliseFirstLetter(ustensil));
         ustensiles.push(...normalizedUstensils);
     });
 
@@ -232,7 +258,7 @@ export function updateFilterTags() {
 
         data[category].forEach(tag => {
             const li = document.createElement('li');
-            li.textContent = tag;
+            li.textContent =  capitaliseFirstLetter(tag);
             li.classList.add('tag');
             ul.appendChild(li);
 
