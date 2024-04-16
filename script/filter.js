@@ -1,24 +1,27 @@
 import {recipes} from "../data/recipes.js";
 import {displayCards} from "./card.js";
 
-
+// attache un écouteur d'événements à un élément de liste (li)
 function attachClickListener(li, ul, selectedUl, category, data) {
+    // Si un écouteur d'événements a déjà été attaché, on ne fait rien
     if (li.listenerAttached) {
         return;
     }
 
+    // Marquer l'élément de liste comme ayant un écouteur d'événements attaché
     li.listenerAttached = true;
 
-    
-
+    //  filtre les recettes en fonction des tags sélectionnés
     function filterRecipesByTags(data, category, selectedFilter) {
+        // Initialiser les recettes filtrées avec toutes les recettes
         let filteredRecipes = recipes;
-        console.log(selectedFilter);
+        // Parcourir tous les filtres sélectionnés
         selectedFilter.forEach(selectedFilter => {
-            // Normalize the filter text
+            // Normaliser le texte du filtre
             let normalizedFilter = selectedFilter.toLowerCase().trim();
             normalizedFilter = normalizedFilter.charAt(0).toUpperCase() + normalizedFilter.slice(1);
 
+            // Filtrer les recettes en fonction de la catégorie
             if (category === 'ingredients') {
                 filteredRecipes = filteredRecipes.filter(recipe => {
                     return recipe.ingredients.some(ingredient => ingredient.ingredient === normalizedFilter);
@@ -28,45 +31,56 @@ function attachClickListener(li, ul, selectedUl, category, data) {
                     return recipe.appliance === normalizedFilter;
                 });
             } else if (category === 'ustensiles') {
-                // toLowerCase() to make the search case-insensitive
+                // toLowerCase() pour rendre la recherche insensible à la casse
                 let normalizedFilter = selectedFilter.toLowerCase().trim();
                 filteredRecipes = filteredRecipes.filter(recipe => {
                     return recipe.ustensils.some(ustensil => ustensil.toLowerCase() === normalizedFilter);
                 });
             }
         });
-        console.log(filteredRecipes);
+
+        // Initialiser les listes d'ingrédients, d'appareils et d'ustensiles
         let ingredients = [];
         let appareils = [];
         let ustensiles = [];
 
+        // Parcourir toutes les recettes filtrées
         filteredRecipes.forEach((recipe) => {
+            // Ajouter tous les ingrédients de la recette à la liste des ingrédients
             recipe.ingredients.forEach(ingredient => {
                 ingredients.push(capitaliseFirstLetter(ingredient.ingredient));
             });
+            // Ajouter l'appareil de la recette à la liste des appareils
             appareils.push(capitaliseFirstLetter(recipe.appliance));
+            // Ajouter tous les ustensiles de la recette à la liste des ustensiles
             ustensiles.push(...recipe.ustensils.map(ustensil => capitaliseFirstLetter(ustensil)));
         });
 
+        // Supprimer les doublons et trier les listes
         ingredients = [...new Set(ingredients)].sort();
         appareils = [...new Set(appareils)].sort();
         ustensiles = [...new Set(ustensiles)].sort();
 
+        // Exclure les tags sélectionnés des listes
         ingredients = ingredients.filter(tag => !selectedFilter.includes(tag));
         appareils = appareils.filter(tag => !selectedFilter.includes(tag));
         ustensiles = ustensiles.filter(tag => !selectedFilter.includes(tag));
 
-
+        // Préparer les données pour le filtre
         const datafiltre = {
             ingredients:[...new Set(ingredients)].sort(),
             appareils: [...new Set(appareils)].sort(),
             ustensiles: [...new Set(ustensiles)].sort()
         };
+
+        // Mettre à jour les tags du filtre pour chaque catégorie
         const categories = ['ingredients', 'appareils', 'ustensiles'];
         categories.forEach(category => {
             const ul = document.querySelector(`.filter_tags_${category}`);
             const selectedUl = document.querySelector(`.selected_filter_tags_${category}`);
-            ul.innerHTML = ''; // Clear the ul
+            ul.innerHTML = ''; // Effacer le ul
+
+            // Ajouter un nouvel élément de liste pour chaque tag
             datafiltre[category].forEach(tag => {
                 const li = document.createElement('li');
                 li.textContent = tag;
@@ -76,15 +90,18 @@ function attachClickListener(li, ul, selectedUl, category, data) {
             });
         });
 
+        // Afficher les cartes des recettes filtrées
         displayCards(filteredRecipes);
         return filteredRecipes;
     }
 
+    // Attacher un écouteur d'événements 'click' à l'élément de liste
     li.addEventListener('click', (event) => {
+        // Si l'élément de liste est déjà sélectionné
         if (event.target.classList.contains('selected')) {
-            // Remove 'selected' class from the clicked li
+            // Supprimer la classe 'selected' de l'élément de liste
             event.target.classList.remove('selected');
-            // Remove the li from the permanent list
+            // Supprimer l'élément de liste de la liste permanente
             const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
             const permanentLi = [...permanentUl.children].find(child => child.textContent === event.target.textContent);
             if (permanentLi) {
@@ -95,25 +112,26 @@ function attachClickListener(li, ul, selectedUl, category, data) {
                 selectedLi.remove();
             }
 
-            // Find the correct index to insert the li element
+            // Trouver l'index correct pour insérer l'élément de liste
             const index = [...ul.children].findIndex(child => child.textContent.localeCompare(event.target.textContent) > 0);
             if (index === -1) {
-                // If no such index is found, append the li at the end
+                // Si aucun index n'est trouvé, ajouter l'élément de liste à la fin
                 ul.appendChild(event.target);
             } else {
-                // Otherwise, insert the li before the element at the found index
+                // Sinon, insérer l'élément de liste avant l'élément à l'index trouvé
                 ul.insertBefore(event.target, ul.children[index]);
             }
 
-            // Re-attach the click listener
+            // Réattacher l'écouteur de clic
             attachClickListener(event.target, ul, selectedUl, category, data);
-            //update the filtered recipes
+            // Mettre à jour les recettes filtrées
             const selectedFilter = [...selectedUl.children].map(li => li.textContent);
             filterRecipesByTags(data, category, selectedFilter);
         } else {
-            // Add 'selected' class to the clicked li
+            // Ajouter la classe 'selected' à l'élément de liste cliqué
             event.target.classList.add('selected');
 
+            // Cloner l'élément de liste et ajouter une image de croix
             let selectedLi = event.target.cloneNode(true);
             let crossImg = document.createElement('img');
             crossImg.src = './assets/utils/cross.svg';
@@ -121,38 +139,44 @@ function attachClickListener(li, ul, selectedUl, category, data) {
             selectedUl.appendChild(selectedLi);
             selectedLi.appendChild(crossImg);
 
+            // Cloner l'élément de liste et ajouter une image de croix pour le tag permanent
             let permanentLi = event.target.cloneNode(true);
             let crossTagImg = document.createElement('img');
             crossTagImg.src = './assets/utils/cross_tag.svg';
             crossTagImg.classList.add('cross_tag');
             const permanentUl = document.querySelector(`.permanent_filter_tags_${category}`);
 
-            // Check if a li with the same content already exists in permanentLi
+            // Vérifier si un élément de liste avec le même contenu existe déjà dans permanentLi
             const existingLi = [...permanentUl.children].find(child => child.textContent === permanentLi.textContent);
             if (!existingLi) {
-                // If no such li exists, add the new li to permanentLi
+                // Si aucun élément de liste n'existe, ajouter le nouvel élément de liste à permanentLi
                 permanentUl.appendChild(permanentLi);
                 permanentLi.appendChild(crossTagImg);
             }
+            // Attacher un écouteur d'événements 'click' à l'élément de liste permanent
             permanentLi.addEventListener('click', () => {
                 permanentLi.remove();
                 selectedLi.remove();
                 li.click();
             });
+            // Attacher un écouteur d'événements 'click' à l'élément de liste sélectionné
             selectedLi.addEventListener('click', () => {
                 selectedLi.remove();
-                // Trigger the click event on the original li to move it back to the original list
+                // Déclencher l'événement de clic sur l'élément de liste original pour le ramener à la liste originale
                 li.click();
             });
 
-            // Remove the li from the original list
+            // Supprimer l'élément de liste de la liste originale
             event.target.remove();
 
+            // Mettre à jour les recettes filtrées
             const selectedFilter = [...selectedUl.children].map(li => li.textContent);
             const filteredRecipes = filterRecipesByTags(data, category, selectedFilter);
 
-            ul.innerHTML = ''; // Clear the ul
+
+            ul.innerHTML = ''; // vide le ul
             let tags = [];
+            // Parcourir toutes les recettes filtrées pour obtenir les tags selon la catégorie
             filteredRecipes.forEach(recipe => {
                 if (category === 'appareils') {
                     tags.push(recipe.appliance);
@@ -167,10 +191,10 @@ function attachClickListener(li, ul, selectedUl, category, data) {
                 }
             });
 
-            // Remove duplicates and sort alphabetically
+            // Supprimer les doublons et trier les tags
             tags = [...new Set(tags)].sort();
 
-            // Exclude the selected tags
+            // Exclure les tags sélectionnés des tags
             tags = tags.filter(tag => !selectedFilter.includes(tag));
 
 
@@ -186,7 +210,9 @@ function attachClickListener(li, ul, selectedUl, category, data) {
         }
     });
 
-
+    // Attacher un écouteur d'événements 'click' à l'élément de liste permanent
+    // pour déclencher l'événement de clic sur l'élément de liste original
+    // pour le ramener à la liste originale
     const permanentFilterTags = ['appareils', 'ingredients', 'ustensiles'];
     permanentFilterTags.forEach(filterTag => {
         const permanentFilterTagUl = document.querySelector(`.permanent_filter_tags_${filterTag}`);
@@ -201,6 +227,7 @@ function attachClickListener(li, ul, selectedUl, category, data) {
         });
     });
 }
+// Fermer le dropdown si on clique en dehors
 document.addEventListener('click', function(event) {
     const filterDropdowns = document.querySelectorAll('.filter-dropdown');
     filterDropdowns.forEach((dropdown) => {
@@ -221,16 +248,20 @@ function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+// Mettre à jour les tags du filtre
 export function updateFilterTags() {
+    // Initialiser les listes d'ingrédients, d'appareils et d'ustensiles
     let ingredients = [];
     let appareils = [];
     let ustensiles = [];
 
+    // Parcourir toutes les recettes
     recipes.forEach((recipe) => {
         recipe.ingredients.forEach(ingredient => {
+            // Normaliser le texte de l'ingrédient
             let normalizedIngredient = ingredient.ingredient.toLowerCase().trim();
             normalizedIngredient = normalizedIngredient.charAt(0).toUpperCase() + normalizedIngredient.slice(1);
-            // Remove trailing 's' to handle plurals
+            // Supprimer le 's' à la fin de l'ingrédient
             if (normalizedIngredient.endsWith('s')) {
                 normalizedIngredient = normalizedIngredient.slice(0, -1);
             }
@@ -244,17 +275,20 @@ export function updateFilterTags() {
         ustensiles.push(...normalizedUstensils);
     });
 
+    // Supprimer les doublons et trier les listes
     ingredients = [...new Set(ingredients)].sort();
     appareils = [...new Set(appareils)].sort();
     ustensiles = [...new Set(ustensiles)].sort();
 
+    // Préparer les données pour le filtre
     const categories = ['ingredients', 'appareils', 'ustensiles'];
     const data = {ingredients, appareils, ustensiles};
 
+    // Mettre à jour les tags du filtre pour chaque catégorie
     categories.forEach(category => {
         const ul = document.querySelector(`.filter_tags_${category}`);
         const selectedUl = document.querySelector(`.selected_filter_tags_${category}`);
-        ul.innerHTML = ''; // Clear the ul
+        ul.innerHTML = ''; // Effacer le ul
 
         data[category].forEach(tag => {
             const li = document.createElement('li');
@@ -268,7 +302,7 @@ export function updateFilterTags() {
     });
 
 }
-
+// Gérer les filtres
 export function handleFilters() {
     const filterButtons = document.querySelectorAll('.filter-button');
     //si on clique sur un bouton, on affiche le dropdown correspondant
