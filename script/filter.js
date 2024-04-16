@@ -314,23 +314,25 @@ export function handleFilters() {
                 if (!dropdown.classList.contains('hidden')) {
                     button.style.borderRadius = '11px 11px 0 0';
                     dropdown.style.zIndex = '1';
-                    //change src of the arrow to up
+                    //flerche vers le haut
                     arrowImg.setAttribute('src', './assets/utils/ArrowUp.svg');
                 } else {
                     button.style.borderRadius = '11px';
                     dropdown.style.zIndex = '-1';
-                    //change src
+                    //flerche vers le bas
                     arrowImg.setAttribute("src", "./assets/utils/ArrowDown.svg");
                 }
             });
         }
-    );
+    )
+
+    // Gérer la recherche dans les filtres
     const filterSearchInput = document.querySelectorAll('.filter-search');
     filterSearchInput.forEach((input) => {
             input.addEventListener('input', (event) => {
                 // Get the parent container of the input field
                 const parentContainer = event.target.parentElement;
-// Get the category of the filter
+                // Get the category of the filter
                 const category = 'ingredients' || 'appareils' || 'ustensiles';
                 // Get all the tag elements within this parent container
                 const filterTags = parentContainer.querySelectorAll('.tag');

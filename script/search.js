@@ -38,9 +38,13 @@ export function handleSearch() {
             // Clear previous results
             document.getElementById('results').innerHTML = '';
             // Display new results
-            displayCards(filteredResults);
-            // Update total recette count
-            totalRecette.textContent = `${filteredResults.length} recettes trouvées`;
+            if (filteredResults.length === 0) {
+                totalRecette.textContent = `Aucune recette ne contient '${event.target.value}' vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
+            } else {
+                displayCards(filteredResults);
+                // Update total recette count
+                totalRecette.textContent = `${filteredResults.length} recettes trouvées`;
+            }
         }
     });
 }
