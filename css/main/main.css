@@ -1,0 +1,111 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  padding: 2rem 7rem 14rem;
+  background: #EDEDED;
+}
+
+.navbar {
+  justify-content: space-between;
+}
+
+.nav {
+  gap: 4rem;
+}
+
+.dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 12.5rem;
+  padding: 1rem;
+  background: #fff;
+  color: #1B1B1B;
+}
+
+.dropdown-toggle:hover {
+  background: #fff;
+  border: none;
+}
+
+.dropdown-toggle:focus {
+  background: #fff;
+  border: none;
+  color: #1B1B1B;
+}
+
+.dropdown-toggle.show {
+  border-radius: 11px 11px 0 0
+}
+
+.dropdown-menu.show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 300px;
+  overflow: scroll;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 0 0 11px 11px
+}
+
+.dropdown_search {
+  margin: .25rem 0 1rem 0;
+  padding: .25rem;
+  border-radius: 2px;
+  border: 1px solid var(--Light-Grey, #C6C6C6);
+  font-size: 1rem;
+  width: auto;
+  max-width: 180px;
+}
+
+.dropdown_search_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 1rem;
+  top: 1.4rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: #7A7A7A;
+  background: #fff;
+}
+
+
+.dropdown-item {
+  width: 12.5rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+.dropdown-item:hover {
+  background: #FFD15B;
+  ;
+}
+
+.badge-bg{
+  color: #000 !important;
+  background: #FFD15B;
+  max-width: 200px;
+}
+
+.badge-bg:hover{
+  font-weight:700;
+}
+
+.badge-container{
+  display: flex;
+  gap: 5px;
+}
+
+.total-recipe {
+  color: var(--Black, #1B1B1B);
+  font-family: Anton;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
