@@ -1,9 +1,54 @@
-<mxfile host="app.diagrams.net" modified="2024-07-24T12:29:16.182Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" version="24.7.1" etag="AwCJzAfptr2ji5IRBlfl" type="github">
+<mxfile host="app.diagrams.net" modified="2024-07-24T12:47:08.147Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15" etag="H_MtLt_xkgwpoKkqt5xd" version="24.7.1" type="github">
   <diagram name="Page-1" id="g-C4oWgNLVlERu_i3Pq9">
-    <mxGraphModel>
+    <mxGraphModel dx="1088" dy="1951" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-1" value="START" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-1160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-2" value="Initialise un tableau vide &quot;result&quot;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-760" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-4" value="User enter&amp;nbsp;&lt;div&gt;characters in input&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&amp;nbsp; &amp;nbsp;(inputHeader)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-1070" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-5" value="&lt;div&gt;input.lenght &amp;gt;= 3&lt;br&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="263.75" y="-990" width="132.5" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-6" value="&lt;div&gt;MESSAGE&lt;/div&gt;ERROR : Veuillez entrer minimum 3 caractères" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="-990" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-8" value="input convert &amp;nbsp;to lowercase" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="266.25" y="-870" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-9" value="Boucle for&amp;nbsp;&lt;div&gt;Check name, description&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-10" value="Add recipes in table results" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-584.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AY6eB3hb2gmJjxPyxkKC-11" target="AY6eB3hb2gmJjxPyxkKC-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-11" value="if results&amp;nbsp;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="-490" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-12" value="Error message" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="35" y="-470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-14" value="clear cardsContainer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="265" y="-360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-15" value="Call display results" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="265" y="-270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-16" value="call generate card" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AY6eB3hb2gmJjxPyxkKC-18" value="END" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="-80" width="90" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
