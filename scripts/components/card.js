@@ -1,6 +1,6 @@
 
 function generateCard(recipe) {
-    const cardsContainer = document.getElementById('cardsContainer');
+    const cardsContainer = document.getElementById('cards-container');
     const card = document.createElement('article');
     card.classList.add('w-96', 'mb-8', 'flex', 'flex-col', 'border', 'border-gray-300', 'rounded-lg', 'shadow-lg', 'overflow-hidden');
     card.innerHTML = `

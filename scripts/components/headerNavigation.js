@@ -1,9 +1,10 @@
 // créer un évènement
 document.addEventListener('DOMContentLoaded', () => {
-    let inputHeader = document.getElementById('inputHeader');
+    let inputHeader = document.getElementById('input-header');
     const loopIcon = document.getElementById('loopIcon');
     const resetButton = document.getElementById('resetButton');
     const filterSelected = document.getElementById('filter-selected');
+    const errorMessage = document.getElementById('error-message');
 
     resetButton.classList.add('hidden');
 
@@ -98,10 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {Array} results - List of recipes to display.
      */
     function displayResults(results) {
-        const cardsContainer = document.getElementById('cardsContainer');
+        const cardsContainer = document.getElementById('cards-container');
         cardsContainer.innerHTML = '';
         results.forEach(recipe => generateCard(recipe));
-        updateRecipeCount(results.length)
+        updateRecipeCount(results.length);
     }
 
     /**
@@ -116,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Clear the displayed results and show all recipes.
      */
     function clearResults() {
-        const cardsContainer = document.getElementById('cardsContainer');
+        const cardsContainer = document.getElementById('cards-container');
         cardsContainer.innerHTML = '';
         displayAllRecipesAlphabetically();
     }
