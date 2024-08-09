@@ -146,6 +146,7 @@ nav label {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 20px 20px 20px 20px;
@@ -169,8 +170,8 @@ nav label {
   margin-bottom: 50px;
 }
 .recipe_card .ingredient_title {
-  flex: 1 1 calc(50% - 16px); /* Chaque élément prend 50% de la largeur disponible avec espace entre */
-  box-sizing: border-box; /* Inclure le padding et la bordure dans la largeur totale */
+  flex: 1 1 calc(50% - 16px);
+  box-sizing: border-box;
 }
 .recipe_card .ingredient_title p:first-child {
   margin: 0px 20px;
@@ -197,4 +198,99 @@ nav label {
   top: 4%;
   right: 5%;
   margin: 0;
+}
+
+#sort_container {
+  display: flex;
+  margin: 20px 96px;
+  gap: 96px;
+}
+.dropdown {
+  position: relative;
+}
+
+.dropdown_button {
+  max-width: 195px;
+  height: 56px;
+  padding: 20px;
+  border-radius: 11px;
+  display: flex;
+  gap: 63px;
+  border: none;
+  color: var(--black);
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 16px;
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.fa-solid.fa-chevron-up {
+  display: none;
+}
+
+.dropdown_content {
+  display: none;
+  position: absolute;
+  background-color: var(--white);
+  max-width: 195px;
+  max-height: 315px;
+  overflow-y: auto;
+  z-index: 1;
+  padding: 20px;
+  border-radius: 0 0 11px 11px;
+  top: 45px;
+}
+.dropdown_content::-webkit-scrollbar {
+  display: none;
+}
+.dropdown_content input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid var(--light-grey);
+  border-radius: 2px;
+  height: 30px;
+  padding: 5px;
+}
+.dropdown_content button {
+  position: absolute;
+  top: 28px;
+  right: 26px;
+  border: none;
+  background-color: var(--white);
+  color: var(--light-grey);
+}
+.dropdown_content div {
+  cursor: pointer;
+  background-color: var(--white);
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  padding: 20px;
+  color: var(--black);
+  display: block;
+  margin-left: -20px;
+  width: 100%;
+}
+.dropdown_content div:hover {
+  background-color: var(--yellow);
+}
+
+.dropdown.active .dropdown_content {
+  display: block;
+}
+
+.clear_button_dropdown {
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  right: 50px;
+  top: 30px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: none;
+  color: var(--light-grey);
+}
+.dropdown_content input:not(:placeholder-shown) + .clear_button_dropdown {
+  display: block;
 }

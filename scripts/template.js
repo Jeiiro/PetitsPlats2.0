@@ -53,4 +53,75 @@ function generateRecipeCards() {
     container.appendChild(card);
   });
 }
-window.onload = generateRecipeCards;
+function extractUniqueItems() {
+  const ingredientsSet = new Set();
+  const appliancesSet = new Set();
+  const ustensilsSet = new Set();
+
+  recipes.forEach((recipe) => {
+    recipe.ingredients.forEach((ing) => ingredientsSet.add(ing.ingredient));
+    appliancesSet.add(recipe.appliance);
+    recipe.ustensils.forEach((ust) => ustensilsSet.add(ust));
+  });
+
+  return {
+    ingredients: Array.from(ingredientsSet),
+    appliances: Array.from(appliancesSet),
+    ustensils: Array.from(ustensilsSet),
+  };
+}
+
+function applyUniqueItems() {
+  const { ingredients, appliances, ustensils } = extractUniqueItems();
+
+  const ingredientsContainer = document.getElementById("ingredients_menu");
+  const appliancesContainer = document.getElementById("appliances_menu");
+  const ustensilsContainer = document.getElementById("ustensils_menu");
+
+  addItemToMenu(ingredients, ingredientsContainer);
+  addItemToMenu(appliances, appliancesContainer);
+  addItemToMenu(ustensils, ustensilsContainer);
+}
+
+function addItemToMenu(items, container) {
+  items.forEach((item) => {
+    const div = document.createElement("div");
+    div.textContent = item;
+    container.appendChild(div);
+  });
+}
+
+function setupDropdown() {
+  const dropdowns = document.querySelectorAll(".dropdown");
+
+  dropdowns.forEach((dropdown) => {
+    const button = dropdown.querySelector(".dropdown_button");
+    button.addEventListener("click", () => {
+      dropdown.classList.toggle("active");
+    });
+    window.addEventListener("click", (event) => {
+      if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove("active");
+      }
+    });
+    const searchInput = dropdown.querySelector('input[type="text"]');
+    const menuItems = dropdown.querySelectorAll(".dropdown_content div");
+
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      menuItems.forEach((item) => {
+        if (item.textContent.toLowerCase().includes(filter)) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  generateRecipeCards();
+  applyUniqueItems();
+  setupDropdown();
+});

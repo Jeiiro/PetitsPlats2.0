@@ -53,7 +53,66 @@
       />
     </header>
     <main>
-      <div id="sort_container"></div>
+      <div id="sort_container">
+        <div class="dropdown" id="ingredients_dropdown">
+          <button class="dropdown_button">
+            Ingrédients
+            <p class="fa fa-chevron-down"></p>
+            <p class="fa-solid fa-chevron-up"></p>
+          </button>
+          <div class="dropdown_content" id="ingredients_menu">
+            <input
+              type="text"
+              class="input_search"
+              id="ingredients_search"
+              placeholder="Ex: Salade"
+            />
+            <span class="clear_button_dropdown">✖</span>
+            <button type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+        <div class="dropdown" id="appliances_dropdown">
+          <button class="dropdown_button">
+            Appareils
+            <p class="fa fa-chevron-down"></p>
+            <p class="fa-solid fa-chevron-up"></p>
+          </button>
+          <div class="dropdown_content" id="appliances_menu">
+            <input
+              type="text"
+              class="input_search"
+              id="appliances_search"
+              placeholder="Ex : Mixeur"
+            />
+            <span class="clear_button_dropdown">✖</span>
+            <button type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+        <div class="dropdown" id="ustensils_dropdown">
+          <button class="dropdown_button">
+            Ustensils
+            <p class="fa fa-chevron-down"></p>
+            <p class="fa-solid fa-chevron-up"></p>
+          </button>
+          <div class="dropdown_content" id="ustensils_menu">
+            <input
+              type="text"
+              class="input_search"
+              id="ustensils_search"
+              placeholder="Ex: Louche"
+            />
+            <span class="clear_button_dropdown">✖</span>
+            <button type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+        <div class="counting_recipes"></div>
+      </div>
       <div id="recipes_container"></div>
     </main>
     <script src="./data/recipes.js"></script>
