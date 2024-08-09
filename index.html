@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Les Petits Plats</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <h1>LES PETITS PLATS</h1>
+        <img
+          src="./assets/logo/logo_plate.png"
+          alt="logo les petits plats"
+          class="logo_plate"
+        />
+      </div>
+      <nav>
+        <label for="search_container">
+          CHERCHEZ PARMI PLUS DE 150 RECETTES
+          <br />
+          DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES
+        </label>
+        <div class="search_contain">
+          <input
+            type="text"
+            placeholder="Rechercher une recette, un ingrédient, ..."
+            id="search_container"
+            maxlength="90"
+            minlength="3"
+          />
+          <span class="clear_button">✖</span>
+          <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </nav>
+      <img
+        src="./assets/logo/lampos-aritonang-24gR_9lCdes-unsplash.jpg"
+        alt="image background header"
+        class="background_header"
+      />
+    </header>
+    <main>
+      <div id="sort_container"></div>
+      <div id="recipes_container"></div>
+    </main>
+    <script src="./data/recipes.js"></script>
+    <script src="./scripts/index.js"></script>
+    <script src="./scripts/template.js"></script>
+  </body>
+</html>
