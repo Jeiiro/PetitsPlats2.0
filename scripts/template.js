@@ -96,7 +96,7 @@ function applyUniqueItems() {
   addItemToMenu(ustensils, ustensilsContainer, "ustensil");
 }
 
-function addItemToMenu(items, container) {
+function addItemToMenu(items, container, category) {
   items.forEach((item) => {
     const div = document.createElement("div");
     div.textContent = item;
