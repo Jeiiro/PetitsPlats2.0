@@ -98,6 +98,7 @@ function addItemToMenu(items, container) {
   items.forEach((item) => {
     const div = document.createElement("div");
     div.textContent = item;
+    div.setAttribute("data-category", category);
     container.appendChild(div);
   });
 }
