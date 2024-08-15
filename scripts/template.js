@@ -1,5 +1,6 @@
 function generateRecipeCards() {
   const container = document.getElementById("recipes_container");
+  container.innerHTML = "";
   recipes.forEach((recipe) => {
     const card = document.createElement("div");
     card.className = "recipe_card";
@@ -52,6 +53,7 @@ function generateRecipeCards() {
 
     container.appendChild(card);
   });
+  updateRecipeCount();
 }
 function extractUniqueItems() {
   const ingredientsSet = new Set();
@@ -216,4 +218,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupDropdown();
   updateRecipeCount();
   setupTagSelection();
+  searchRecipes();
 });
