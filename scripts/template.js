@@ -89,9 +89,9 @@ function applyUniqueItems() {
   const appliancesContainer = document.getElementById("appliances_menu");
   const ustensilsContainer = document.getElementById("ustensils_menu");
 
-  addItemToMenu(ingredients, ingredientsContainer);
-  addItemToMenu(appliances, appliancesContainer);
-  addItemToMenu(ustensils, ustensilsContainer);
+  addItemToMenu(ingredients, ingredientsContainer, "ingredient");
+  addItemToMenu(appliances, appliancesContainer, "appliance");
+  addItemToMenu(ustensils, ustensilsContainer, "ustensil");
 }
 
 function addItemToMenu(items, container) {
