@@ -59,16 +59,27 @@ function extractUniqueItems() {
   const ustensilsSet = new Set();
 
   recipes.forEach((recipe) => {
-    recipe.ingredients.forEach((ing) => ingredientsSet.add(ing.ingredient));
-    appliancesSet.add(recipe.appliance);
-    recipe.ustensils.forEach((ust) => ustensilsSet.add(ust));
+    recipe.ingredients.forEach((ing) =>
+      ingredientsSet.add(
+        capitalizeFirstLetter(ing.ingredient.toLowerCase().trim())
+      )
+    );
+    appliancesSet.add(
+      capitalizeFirstLetter(recipe.appliance.toLowerCase().trim())
+    );
+    recipe.ustensils.forEach((ust) =>
+      ustensilsSet.add(capitalizeFirstLetter(ust.toLowerCase().trim()))
+    );
   });
 
   return {
-    ingredients: Array.from(ingredientsSet),
-    appliances: Array.from(appliancesSet),
-    ustensils: Array.from(ustensilsSet),
+    ingredients: Array.from(ingredientsSet).sort(),
+    appliances: Array.from(appliancesSet).sort(),
+    ustensils: Array.from(ustensilsSet).sort(),
   };
+}
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function applyUniqueItems() {
@@ -119,9 +130,90 @@ function setupDropdown() {
     });
   });
 }
+function updateRecipeCount() {
+  const recipeContainer = document.getElementById("recipes_container");
+  const recipeCount = recipeContainer.children.length;
+  const recipeCountElement = document.querySelector(".counting_recipes");
+  recipeCountElement.textContent = `${recipeCount} recettes`;
+}
+function setupTagSelection() {
+  const selectedTagsContainer = document.getElementById("selected_tags");
+  function createTag(text) {
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = text;
+
+    const removeButton = document.createElement("span");
+    removeButton.className = "remove_tag";
+    removeButton.textContent = "x";
+    removeButton.addEventListener("click", () => {
+      selectedTagsContainer.removeChild(tag);
+      updateRecipeCount();
+    });
+
+    tag.appendChild(removeButton);
+    selectedTagsContainer.appendChild(tag);
+    updateRecipeCount();
+  }
+  function handleDropdownSelection(event) {
+    const selectedText = event.target.textContent.trim();
+    const existingTags = Array.from(selectedTagsContainer.children).map((tag) =>
+      tag.textContent.replace("x", "").trim()
+    );
+
+    if (!existingTags.includes(selectedText)) {
+      createTag(selectedText);
+    }
+  }
+
+  const dropdownItems = document.querySelectorAll(".dropdown_content div");
+  dropdownItems.forEach((item) => {
+    item.addEventListener("click", handleDropdownSelection);
+  });
+}
+function updateRecipeDisplay() {
+  const selectedTagsContainer = document.getElementById("selectedTags");
+  const selectedTags = Array.from(selectedTagsContainer.children).map((tag) =>
+    tag.textContent.replace("x", "").trim().toLowerCase()
+  );
+
+  const recipes = document.querySelectorAll(".recipe_card");
+
+  recipes.forEach((recipe) => {
+    const ingredients = Array.from(
+      recipe.querySelectorAll(".ingredients .ingredient_title")
+    ).map((ing) => ing.textContent.trim().toLowerCase());
+
+    const appliances = recipe
+      .querySelector(".appliance")
+      ?.textContent.trim()
+      .toLowerCase();
+
+    const ustensils = Array.from(recipe.querySelectorAll(".ustensils div")).map(
+      (ust) => ust.textContent.trim().toLowerCase()
+    );
+
+    const matches = selectedTags.every(
+      (tag) =>
+        ingredients.includes(tag) ||
+        (appliances && appliances.includes(tag)) ||
+        ustensils.includes(tag)
+    );
+
+    if (matches || selectedTags.length === 0) {
+      recipe.style.display = "";
+    } else {
+      recipe.style.display = "none";
+    }
+  });
+
+  updateRecipeCount();
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   generateRecipeCards();
   applyUniqueItems();
   setupDropdown();
+  updateRecipeCount();
+  setupTagSelection();
 });

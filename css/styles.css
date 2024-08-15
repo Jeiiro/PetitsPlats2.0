@@ -204,6 +204,12 @@ nav label {
   display: flex;
   margin: 20px 96px;
   gap: 96px;
+  align-items: center;
+}
+.counting_recipes {
+  font-family: var(--font-main);
+  font-size: 21px;
+  margin-left: auto;
 }
 .dropdown {
   position: relative;
@@ -293,4 +299,25 @@ nav label {
 }
 .dropdown_content input:not(:placeholder-shown) + .clear_button_dropdown {
   display: block;
+}
+#selected_tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 20px 96px 0px;
+}
+.tag {
+  background-color: var(--yellow);
+  color: var(--black);
+  border-radius: 10px;
+  padding: 17px 18px;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+.remove_tag {
+  font-weight: bold;
+  cursor: pointer;
 }
