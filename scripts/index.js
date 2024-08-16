@@ -5,7 +5,8 @@ clearButton.addEventListener("click", function () {
   input.value = "";
   input.focus();
   clearButton.style.display = "";
-  generateRecipeCards();
+  searchRecipes();
+  updateRecipeCount();
 });
 
 const clearButtonDropdown = document.querySelectorAll(".clear_button_dropdown");
@@ -18,5 +19,6 @@ clearButtonDropdown.forEach((button) => {
       input.focus();
     });
     button.style.display = "";
+    updateDropdown();
   });
 });

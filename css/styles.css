@@ -321,3 +321,6 @@ nav label {
   font-weight: bold;
   cursor: pointer;
 }
+.error_message {
+  margin-top: 100px;
+}
