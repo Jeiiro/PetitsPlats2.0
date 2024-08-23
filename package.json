@@ -1,0 +1,18 @@
+{
+  "name": "petitsplats2.0",
+  "version": "1.0.0",
+  "description": "P7 JS 2.0 Les petits plats",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "typescript-eslint": "^8.2.0"
+  }
+}
