@@ -5,7 +5,9 @@ clearButton.addEventListener("click", function () {
   input.value = "";
   input.focus();
   clearButton.style.display = "";
+  // eslint-disable-next-line no-undef
   searchRecipes();
+  // eslint-disable-next-line no-undef
   updateRecipeCount();
 });
 
@@ -19,6 +21,7 @@ clearButtonDropdown.forEach((button) => {
       input.focus();
     });
     button.style.display = "";
+    // eslint-disable-next-line no-undef
     updateDropdown();
   });
 });
