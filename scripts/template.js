@@ -173,12 +173,13 @@ function setupRecipeCount() {
 function setupTagSelection() {
   const selectedTagsContainer = document.getElementById("selected_tags");
   // Fonction pour créer un tag
-  function createTag(text) {
+  function createTag(text, category) {
     const tag = document.createElement("div");
     tag.className = "tag";
     const tagName = document.createElement("span");
     tagName.className = "tag_name";
     tagName.textContent = text;
+    tagName.setAttribute("data-category", category);
 // Bouton pour supprimer le tag
     const removeButton = document.createElement("span");
     removeButton.className = "remove_tag";
@@ -202,12 +203,13 @@ function setupTagSelection() {
   // Fonction pour gérer la sélection d'un élément dans le menu déroulant
   function handleDropdownSelection(event) {
     const selectedText = event.target.textContent.trim();
+    const dataCategory = event.target.getAttribute("data-category");
     const existingTags = Array.from(selectedTagsContainer.children).map((tag) =>
       tag.textContent.replace("x", "").trim()
     );
 
-    if (!existingTags.includes(selectedText)) {
-      createTag(selectedText);
+    if (!existingTags.includes(selectedText, dataCategory)) {
+      createTag(selectedText, dataCategory);
     }
   }
 // Ajoute un écouteur d'événement pour chaque élément du menu déroulant
